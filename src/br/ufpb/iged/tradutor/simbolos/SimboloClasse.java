@@ -8,6 +8,8 @@ public class SimboloClasse extends SimboloComEscopo implements Escopo, Tipo {
 
     public Map<String,Simbolo> membros = new LinkedHashMap<String,Simbolo>();
     public Map<String, SimboloVariavel> campos = new LinkedHashMap<String,SimboloVariavel>();
+    public List<SimboloMetodo> metodos = new ArrayList<SimboloMetodo>();
+
     
     public SimboloClasse(String nome, Escopo escopoEnvolvente, SimboloClasse superClasse) {
         super(nome, escopoEnvolvente);
@@ -50,9 +52,29 @@ public class SimboloClasse extends SimboloComEscopo implements Escopo, Tipo {
     	
     }
     
-    public void definirCampo(SimboloVariavel field) {
-        campos.put(field.nome, field);
-        field.escopo = this; 
+    public SimboloMetodo resolverMetodo(String assinatura){
+    	
+    	for (SimboloMetodo m : metodos){
+    		
+    		if (m.obterAssinatura().equals(assinatura))
+    			return m;
+    		
+    	}
+        
+        if ( superClasse != null ) {
+            return superClasse.resolverMetodo(assinatura);
+        }
+        
+        return null; 
+    	
+    }
+    
+    public void definir(Simbolo simb) {
+		if (simb instanceof SimboloVariavel)
+			campos.put(simb.nome, (SimboloVariavel)simb);
+		else
+			metodos.add((SimboloMetodo)simb);
+        simb.escopo = this; 
     }
 
     public Map<String, Simbolo> obterMembros() { 

@@ -1,6 +1,6 @@
 class A {
 
-  static int x[];
+  static int[] x;
   static int y;
   static Jkgujf orbv;
  
@@ -47,7 +47,7 @@ class A {
   
   void esdf(){
   
-  	int vet[];
+  	int[] vet;
   	int b = 2;
   	
   	int j = vet[b + 3 * 4];
@@ -60,7 +60,9 @@ class A {
   	int n = c.w.a;
   	
   	int p = c.v[3];
-  
+  	
+  	c.nakasja(j, 8);
+  	
   }
 
 }

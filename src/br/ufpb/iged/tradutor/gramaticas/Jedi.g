@@ -61,12 +61,12 @@ superClasse
 
 membroClasse : fieldDecl | constrDecl | methodDecl;
 
-fieldDecl : a = 'static'? tipo ID vet ='[]'? ';' 
+fieldDecl : a = 'static'? tipo vet ='[]'? ID  ';' 
 	-> ^(FIELD_DECL $a? tipo ID $vet?)	
 	;	
 	
-methodDecl : a = 'static'? tipo ID '(' params* ')' bloco
-           -> ^(METHOD_DECL $a? tipo ID params* bloco)
+methodDecl : a = 'static'? tipo vet ='[]'? ID '(' params* ')' bloco
+           -> ^(METHOD_DECL $a? tipo ID $vet? params* bloco)
 	   ;
 	   
 constrDecl :  ID '(' params* ')' bloco
@@ -75,7 +75,7 @@ constrDecl :  ID '(' params* ')' bloco
 	   
 params	:  param (',' param)* -> ^(PARAMS param+);
 
-param	:  tipo ID vet ='[]'? -> ^(PARAM tipo ID $vet?);
+param	:  tipo vet ='[]'? ID  -> ^(PARAM tipo ID $vet?);
 
 instrucao  : ';'
 	| expressao ';'
@@ -116,6 +116,7 @@ posfixa
 		:	'.' ID '(' listaExpressoes ')' -> ^(METHOD_CALL ^('.' $posfixa ID ) listaExpressoes)
 		|	'.' ID						  -> ^('.' $posfixa ID)
 		|	'(' listaExpressoes ')'        -> ^(METHOD_CALL $posfixa listaExpressoes)
+		|       '('')'                         -> ^(METHOD_CALL $posfixa)
 		|       '.' ID '[' expressao ']' -> ^(VECT_EXPR ^('.' $posfixa ID ) expressao)
 		|       '[' expressao ']'  -> ^(VECT_EXPR $posfixa expressao)
 	)*
@@ -154,7 +155,7 @@ chamadaMetodo
     ;
 	
 varDecl
-    :   tipo ID vet ='[]'? ('=' expressao)? 
+    :   tipo vet ='[]'? ID ('=' expressao)? 
     -> ^(VAR_DECL tipo ID $vet? expressao?) 
     ;
     
@@ -163,7 +164,7 @@ listaVarDecl :	varDecl (varDeclLista )*
 	     -> ^(LISTA_VAR_DECL varDecl varDeclLista*)
 	     ;
 	     
-varDeclLista : ',' ID vet = '[]'? ('=' expressao)?
+varDeclLista : ',' vet = '[]'? ID  ('=' expressao)?
 	     -> ^(VAR_DECL_LISTA ID $vet? expressao?)
 	     ;
     

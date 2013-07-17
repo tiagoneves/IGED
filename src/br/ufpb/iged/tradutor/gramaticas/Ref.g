@@ -37,6 +37,7 @@ options {
     String linha;
     SimboloMetodo metodoAtual;
     Tree toStore;
+    boolean tipoRetornoVet = false;
     
     public Ref(CommonTreeNodeStream input, TabelaSimbolos tabelaSimbolos) {
         this(input);
@@ -145,6 +146,7 @@ bottomup
     |   acessoCampo
     |   vetorExpr
     |   chamadaMetodo
+    |   chamadaMetodoSemParams
     ;
 
 enterClass
@@ -180,13 +182,15 @@ exitClass
     ;
     
 enterMethod
-    :  ^(METHOD_DECL st = .? tp = . ID parm = .* ^(BLOCO .*))
+    :  ^(METHOD_DECL st = .? tp = . ID vet = .? (^(parm = PARAMS .+))* ^(BLOCO .*))
         {
         	metodoAtual = (SimboloMetodo) $ID.simbolo;
 	    
-	    	tipoMetodo = $tp.getText(); 
+	    	tipoMetodo = $tp.getText();
 	    	
-	    	if (parm == null) {
+	    	tipoRetornoVet = $vet != null && $vet.getText().equals("[]") && tipoMetodo.equals("int");
+	    	
+	    	if ($parm == null) {
 	    	
 	    		Tradutor.buffer.append(".method ");
 	        
@@ -195,7 +199,9 @@ enterMethod
 	        
 	                Tradutor.buffer.append( $ID.text + "()");
 	                
-	                if (tipoMetodo.equals("void"))
+	                if (tipoRetornoVet)
+	                	Tradutor.buffer.append("[I;");
+	                else if (tipoMetodo.equals("void"))
 				Tradutor.buffer.append("V");
 			else if (tipoMetodo.equals("int"))
 				Tradutor.buffer.append("I");
@@ -224,11 +230,11 @@ enterMethod
     ;
     
 enterConstructor 
-	:  ^(CONSTR_DECL ID parm = .* ^(BLOCO .*))
+	:  ^(CONSTR_DECL ID (^(parm = PARAMS .+))* ^(BLOCO .*))
 	 {
 	        metodoAtual = (SimboloMetodo) $ID.simbolo;
 	        
-	        if (parm == null) {
+	        if ($parm == null) {
 	    	
 	    		Tradutor.buffer.append(".method ");
 	        
@@ -307,7 +313,9 @@ exitParams
 	{
 		linha += ")";
 		
-		if (tipoMetodo.equals("void"))
+		if (tipoRetornoVet)
+			linha += "[;";
+		else if (tipoMetodo.equals("void"))
 			linha += "V";
 		else if (tipoMetodo.equals("int"))
 			linha += "I";
@@ -372,31 +380,6 @@ listaVarDeclAtribuicao
         }
     ;
     
-/*identificadorExpressao
-	:       ^(EXPR ID)
-		{
-			if ($ID.text.equals("null"))
-				Tradutor.buffer.append("aconst_null\n");
-				
-			else {
-			
-				SimboloVariavel simboloVariavel = (SimboloVariavel) $ID.escopo.resolver($ID.text);
-							
-				loadVar(simboloVariavel);
-		        
-		        }
-			
-		}
-	;
-	
-numeroExpressao
-	:       ^(EXPR INT)
-		{
-			loadConst($INT.text);
-			
-		}
-	;*/
-
 atribuicao
 	:	^('=' a = . b = .)
 	{
@@ -595,6 +578,8 @@ vetorExpr
 	:	^(VECT_EXPR a = . ^(EXPR b = .))
 		{
 		
+		if (!($VECT_EXPR.hasAncestor(VECT_EXPR) || $VECT_EXPR.hasAncestor(METHOD_CALL))){
+		
 			if (toStore != $VECT_EXPR) {
 			
 				CommonTree tree;
@@ -618,9 +603,11 @@ vetorExpr
 				
 				Tradutor.buffer.append("iaload\n");
 				
-				Tradutor.tipoAtual = new SimboloTipoReferencia("int[]");
+				Tradutor.tipoAtual = new SimboloTipoReferencia("int");
 				
 			}
+			
+		}
 		
 		}
 	;
@@ -629,57 +616,230 @@ chamadaMetodo
 	:	^(METHOD_CALL a = . ^(LISTA_EXPR exprs += .+))
 	{
 		
-		SimboloVariavel simboloVariavel;
-		SimboloMetodo simboloMetodo;
-		SimboloClasse simboloClasse;
-		String nomeMetodo;
+		if (!($METHOD_CALL.hasAncestor(VECT_EXPR) || $METHOD_CALL.hasAncestor(METHOD_CALL))){
 		
-		if ($a.getText().equals(".")){
-			nomeMetodo = ((Tree)$a.getChildren().get(1)).getText();
-			if (((Tree)$a.getChildren().get(0)).getText().equals(".")){
-				percorrerSubArvore((TradutorAST)$a.getChildren().get(0));
-				simboloClasse = (SimboloClasse)Tradutor.tipoAtual;
-			}else {
-				simboloVariavel = (SimboloVariavel)((TradutorAST)$a.getChildren().get(0)).escopo.resolver(((Tree)$a.getChildren().get(0)).getText());
-				loadVar(simboloVariavel);
-				simboloClasse = (SimboloClasse)tabelaSimbolos.global.resolver(simboloVariavel.getTipo().getNome());
+			SimboloVariavel simboloVariavel;
+			SimboloMetodo simboloMetodo;
+			SimboloClasse simboloClasse = null;
+			String nomeMetodo;
+			boolean chamadaEstatica = false;
+			
+			if ($a.getText().equals(".")){
+				nomeMetodo = ((Tree)$a.getChildren().get(1)).getText();
+				if (((Tree)$a.getChildren().get(0)).getText().equals(".")){
+					percorrerSubArvore((TradutorAST)$a.getChildren().get(0));
+					simboloClasse = (SimboloClasse)Tradutor.tipoAtual;
+				}else {
+					Simbolo s = ((TradutorAST)$a.getChildren().get(0)).escopo.resolver(((Tree)$a.getChildren().get(0)).getText());
+					if (s instanceof SimboloVariavel){
+						simboloVariavel = (SimboloVariavel)s;
+						loadVar(simboloVariavel);
+						simboloClasse = (SimboloClasse)tabelaSimbolos.global.resolver(simboloVariavel.getTipo().getNome());
+					} else if (s instanceof SimboloClasse){
+						simboloClasse = (SimboloClasse)s;
+						chamadaEstatica = true;
+					}
+
+				}
+			} else if ($METHOD_CALL.getParent().getText().equals("new")) {
+				Tradutor.buffer.append("new "+$a.getText()+"\n");
+				simboloClasse = (SimboloClasse)tabelaSimbolos.global.resolver($a.getText());
+				nomeMetodo = $a.getText();
+			} else {
+				Tradutor.buffer.append("aload_0\n");
+				simboloClasse = classeAtual;
+				nomeMetodo = $a.getText();
 			}
-		} else {
-			Tradutor.buffer.append("aload_0\n");
-			simboloClasse = classeAtual;
-			nomeMetodo = $a.getText();
+			
+			List<String> tiposParams = new ArrayList<String>();
+			
+			for (Object expr : list_exprs){
+				TradutorAST p = (TradutorAST)((Tree)expr).getChild(0);
+	            		if (p.escopo != null){
+	            			SimboloVariavel v = (SimboloVariavel)p.escopo.resolver(p.getText());
+	            			tiposParams.add(v.getTipo().getNome());
+	            			loadVar(v);
+	            		} else if (isInteger(p.getText())){
+	            			tiposParams.add("int");
+	            			loadConst(p.getText());
+	            		} else {
+	            			percorrerSubArvore((TradutorAST)expr);
+	                		tiposParams.add(Tradutor.tipoAtual.getNome());
+	            		}
+			}
+			
+			String assinaturaMetodo = nomeMetodo+"("; 
+			
+			List<String> tiposParamsCopia = new ArrayList<String>();
+			
+			tiposParamsCopia.addAll(tiposParams);
+			
+			if (chamadaEstatica)
+				assinaturaMetodo += tiposParamsCopia.remove(0);
+			else
+				assinaturaMetodo += simboloClasse.getNome();
+			
+			for(String tipoParam : tiposParamsCopia)
+				assinaturaMetodo += ","+tipoParam;
+			
+			assinaturaMetodo += ")";
+			
+			System.out.println(assinaturaMetodo);
+			
+			simboloMetodo = simboloClasse.resolverMetodo(assinaturaMetodo);
+			
+			if (simboloMetodo == null){
+				tiposParamsCopia = new ArrayList<String>();
+				tiposParamsCopia.addAll(tiposParams);
+				assinaturaMetodo = nomeMetodo+"(";
+				assinaturaMetodo += tiposParamsCopia.remove(0);
+				for(String tipoParam : tiposParamsCopia)
+					assinaturaMetodo += ","+tiposParamsCopia; 
+				assinaturaMetodo += ")";
+				simboloMetodo = simboloClasse.resolverMetodo(assinaturaMetodo);
+				if (simboloMetodo != null)
+					chamadaEstatica = true;
+				
+			}
+			
+			String call = "";
+			
+			if (simboloMetodo.isEstatico())
+				call += "invokestatic ";
+			else if (simboloMetodo.getNome().equals(simboloClasse))
+				call += "invokespecial ";
+			else
+				call += "invokevirtual ";
+			
+			
+			call += simboloClasse.getNome()+"/";
+			
+			if (simboloMetodo.getNome().equals(simboloClasse))
+				call += "<init>";
+			else
+				call += nomeMetodo;
+				
+			call += "(";
+			
+			for (String tipo : tiposParams){
+			
+				if(tipo.equals("int"))
+					call += "I";
+				else if (tipo.equals("int[]"))
+					call += "[I;";
+				else
+					call += "L"+tipo+";";
+			
+			}
+			
+			call += ")";
+			
+			if (simboloMetodo.getTipo().getNome().equals("void"))
+				call += "V";
+			else if (simboloMetodo.getTipo().getNome().equals("int"))
+				call += "I";
+			else if (simboloMetodo.getTipo().getNome().equals("int[]"))
+				call += "[I;";
+			else
+				call += "L"+simboloMetodo.getTipo().getNome()+";";
+				
+			Tradutor.buffer.append(call+"\n");
+			
+		
 		}
-		
-		List<String> tiposParams = new ArrayList<String>();
-		
-		for (Object expr : list_exprs){
-			percorrerSubArvore((TradutorAST)expr);
-			tiposParams.add(Tradutor.tipoAtual.getNome());
-		}
-		
-		String assinaturaMetodo = nomeMetodo+"(";
-		
-		for(String tipoParam : tiposParams)
-			assinaturaMetodo += tipoParam+",";
-		
-		assinaturaMetodo += ")";
-		
-		System.out.println(assinaturaMetodo);
-		
-		String call = "";
-		
-		//irá resolver o método por assinatura                
-                /*SimboloMetodo simboloMetodo = (SimboloMetodo)simboloClasse.resolver(nomeMetodo);
-		
-		if (simboloMetodo.isEstatico())
-			call = "invokestatic ";
-		else if ($METHOD_CALL.getParent().getText().equals("new"))
-			call = "invokespecial ";
-		else
-			call = "invokevirtual ";
-		
-		
-		//call += Tradutor.tipoReferencia+"/"+nomeMetodo;*/
 	
 	}
+	;
+
+chamadaMetodoSemParams
+	:	^(METHOD_CALL a = .)
+	{
+		
+		if (!($METHOD_CALL.hasAncestor(VECT_EXPR) || $METHOD_CALL.hasAncestor(METHOD_CALL))){
+		
+			SimboloVariavel simboloVariavel;
+			SimboloMetodo simboloMetodo;
+			SimboloClasse simboloClasse = null;
+			String nomeMetodo;
+			boolean chamadaEstatica = false;
+			
+			if ($a.getText().equals(".")){
+				nomeMetodo = ((Tree)$a.getChildren().get(1)).getText();
+				if (((Tree)$a.getChildren().get(0)).getText().equals(".")){
+					percorrerSubArvore((TradutorAST)$a.getChildren().get(0));
+					simboloClasse = (SimboloClasse)Tradutor.tipoAtual;
+				}else {
+					Simbolo s = ((TradutorAST)$a.getChildren().get(0)).escopo.resolver(((Tree)$a.getChildren().get(0)).getText());
+					if (s instanceof SimboloVariavel){
+						simboloVariavel = (SimboloVariavel)s;
+						loadVar(simboloVariavel);
+						simboloClasse = (SimboloClasse)tabelaSimbolos.global.resolver(simboloVariavel.getTipo().getNome());
+					} else if (s instanceof SimboloClasse){
+						simboloClasse = (SimboloClasse)s;
+						chamadaEstatica = true;
+					}
+				}
+				
+			} else if ($METHOD_CALL.getParent().getText().equals("new")) {
+				Tradutor.buffer.append("new "+$a.getText()+"\n");
+				simboloClasse = (SimboloClasse)tabelaSimbolos.global.resolver($a.getText());
+				nomeMetodo = $a.getText();
+			} else {
+				Tradutor.buffer.append("aload_0\n");
+				simboloClasse = classeAtual;
+				nomeMetodo = $a.getText();
+			}
+			
+			String assinaturaMetodo = nomeMetodo+"("; 
+						
+			if (!chamadaEstatica)
+				assinaturaMetodo += simboloClasse.getNome();
+			
+			assinaturaMetodo += ")";
+			
+			System.out.println(assinaturaMetodo);
+			
+			simboloMetodo = simboloClasse.resolverMetodo(assinaturaMetodo);
+			
+			if (simboloMetodo == null){
+				assinaturaMetodo = nomeMetodo+"()";
+				simboloMetodo = simboloClasse.resolverMetodo(assinaturaMetodo);
+				if (simboloMetodo != null)
+					chamadaEstatica = true;			
+			}
+			
+			String call = "";
+			
+			if (simboloMetodo.isEstatico())
+				call += "invokestatic ";
+			else if (simboloMetodo.getNome().equals(simboloClasse))
+				call += "invokespecial ";
+			else
+				call += "invokevirtual ";
+			
+			
+			call += simboloClasse.getNome()+"/";
+			
+			if (simboloMetodo.getNome().equals(simboloClasse))
+				call += "<init>";
+			else
+				call += nomeMetodo;
+				
+			call += "()";		
+			
+			if (simboloMetodo.getTipo().getNome().equals("void"))
+				call += "V";
+			else if (simboloMetodo.getTipo().getNome().equals("int"))
+				call += "I";
+			else if (simboloMetodo.getTipo().getNome().equals("int[]"))
+				call += "[I;";
+			else
+				call += "L"+simboloMetodo.getTipo().getNome()+";";
+				
+			Tradutor.buffer.append(call+"\n");
+			
+		
+		}
+	
+		}
 	;

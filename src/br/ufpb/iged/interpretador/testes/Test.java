@@ -275,10 +275,12 @@ for (i = 1; i < n; i++) {
    
    int x = 0;
    
-   int ppp[] = new int[8];
+   int[] ppp = new int[8];
    
    
    kgkg[ppp[8] + x - 2 + 6] = 3;
+   
+   a();
   
         
     }
@@ -356,7 +358,7 @@ for (i = 1; i < n; i++) {
     	
     }
     
-    public void a(){
+    public static void a(){
     	
     	Object o;
     	
@@ -374,6 +376,10 @@ for (i = 1; i < n; i++) {
     
     public void a(float a, int b){
     	
+    }
+    
+    public int a(double a, int b){
+    	return 0;
     }
     
     public static void b(Object a) {

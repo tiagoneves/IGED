@@ -26,6 +26,8 @@ import br.ufpb.iged.tradutor.parser.Def;
 import br.ufpb.iged.tradutor.parser.Ref;
 import br.ufpb.iged.interpretador.symboltable.classes.BytecodesAST;
 import br.ufpb.iged.interpretador.symboltable.classes.BytecodesErrorNode;
+import br.ufpb.iged.tradutor.simbolos.SimboloClasse;
+import br.ufpb.iged.tradutor.simbolos.SimboloMetodo;
 import br.ufpb.iged.tradutor.simbolos.TabelaSimbolos;
 import br.ufpb.iged.tradutor.simbolos.Tipo;
 import br.ufpb.iged.tradutor.parser.JediLexer;
@@ -46,6 +48,9 @@ public class Tradutor {
 		
 		try {
 			traduzir();
+			SimboloClasse sc = (SimboloClasse)tabelaSimbolos.global.resolver("B");
+			SimboloMetodo sm = (SimboloMetodo)sc.resolverMetodo("nakasja(B,int,int)");
+			System.out.println(sm.obterAssinatura());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

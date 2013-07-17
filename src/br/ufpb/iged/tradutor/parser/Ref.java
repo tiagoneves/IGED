@@ -1,4 +1,4 @@
-// $ANTLR 3.4 C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g 2013-07-14 18:43:08
+// $ANTLR 3.4 C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g 2013-07-16 17:34:39
 
 
     package br.ufpb.iged.tradutor.parser;
@@ -136,6 +136,7 @@ public class Ref extends TreeFilter {
         String linha;
         SimboloMetodo metodoAtual;
         Tree toStore;
+        boolean tipoRetornoVet = false;
         
         public Ref(CommonTreeNodeStream input, TabelaSimbolos tabelaSimbolos) {
             this(input);
@@ -225,10 +226,10 @@ public class Ref extends TreeFilter {
 
 
     // $ANTLR start "topdown"
-    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:127:1: topdown : ( enterClass | enterMethod | enterConstructor | enterParam | enterField | subDivEnter );
+    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:128:1: topdown : ( enterClass | enterMethod | enterConstructor | enterParam | enterField | subDivEnter );
     public final void topdown() throws RecognitionException {
         try {
-            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:128:5: ( enterClass | enterMethod | enterConstructor | enterParam | enterField | subDivEnter )
+            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:129:5: ( enterClass | enterMethod | enterConstructor | enterParam | enterField | subDivEnter )
             int alt1=6;
             switch ( input.LA(1) ) {
             case CLASSE:
@@ -274,7 +275,7 @@ public class Ref extends TreeFilter {
 
             switch (alt1) {
                 case 1 :
-                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:128:9: enterClass
+                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:129:9: enterClass
                     {
                     pushFollow(FOLLOW_enterClass_in_topdown60);
                     enterClass();
@@ -285,7 +286,7 @@ public class Ref extends TreeFilter {
                     }
                     break;
                 case 2 :
-                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:129:9: enterMethod
+                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:130:9: enterMethod
                     {
                     pushFollow(FOLLOW_enterMethod_in_topdown70);
                     enterMethod();
@@ -296,7 +297,7 @@ public class Ref extends TreeFilter {
                     }
                     break;
                 case 3 :
-                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:130:9: enterConstructor
+                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:131:9: enterConstructor
                     {
                     pushFollow(FOLLOW_enterConstructor_in_topdown80);
                     enterConstructor();
@@ -307,7 +308,7 @@ public class Ref extends TreeFilter {
                     }
                     break;
                 case 4 :
-                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:131:9: enterParam
+                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:132:9: enterParam
                     {
                     pushFollow(FOLLOW_enterParam_in_topdown90);
                     enterParam();
@@ -318,7 +319,7 @@ public class Ref extends TreeFilter {
                     }
                     break;
                 case 5 :
-                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:132:9: enterField
+                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:133:9: enterField
                     {
                     pushFollow(FOLLOW_enterField_in_topdown100);
                     enterField();
@@ -329,7 +330,7 @@ public class Ref extends TreeFilter {
                     }
                     break;
                 case 6 :
-                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:133:9: subDivEnter
+                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:134:9: subDivEnter
                     {
                     pushFollow(FOLLOW_subDivEnter_in_topdown110);
                     subDivEnter();
@@ -360,82 +361,15 @@ public class Ref extends TreeFilter {
 
 
     // $ANTLR start "bottomup"
-    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:136:1: bottomup : ( exitClass | exitMethod | exitConstructor | exitParams | listaVarDeclAtribuicao | atribuicao | addMult | subDivExit | acessoCampo | vetorExpr | chamadaMetodo );
+    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:137:1: bottomup : ( exitClass | exitMethod | exitConstructor | exitParams | listaVarDeclAtribuicao | atribuicao | addMult | subDivExit | acessoCampo | vetorExpr | chamadaMetodo | chamadaMetodoSemParams );
     public final void bottomup() throws RecognitionException {
         try {
-            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:137:5: ( exitClass | exitMethod | exitConstructor | exitParams | listaVarDeclAtribuicao | atribuicao | addMult | subDivExit | acessoCampo | vetorExpr | chamadaMetodo )
-            int alt2=11;
-            switch ( input.LA(1) ) {
-            case CLASSE:
-                {
-                alt2=1;
-                }
-                break;
-            case METHOD_DECL:
-                {
-                alt2=2;
-                }
-                break;
-            case CONSTR_DECL:
-                {
-                alt2=3;
-                }
-                break;
-            case PARAMS:
-                {
-                alt2=4;
-                }
-                break;
-            case LISTA_VAR_DECL:
-                {
-                alt2=5;
-                }
-                break;
-            case 53:
-                {
-                alt2=6;
-                }
-                break;
-            case 42:
-            case 43:
-                {
-                alt2=7;
-                }
-                break;
-            case 38:
-            case 46:
-            case 49:
-                {
-                alt2=8;
-                }
-                break;
-            case 48:
-                {
-                alt2=9;
-                }
-                break;
-            case VECT_EXPR:
-                {
-                alt2=10;
-                }
-                break;
-            case METHOD_CALL:
-                {
-                alt2=11;
-                }
-                break;
-            default:
-                if (state.backtracking>0) {state.failed=true; return ;}
-                NoViableAltException nvae =
-                    new NoViableAltException("", 2, 0, input);
-
-                throw nvae;
-
-            }
-
+            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:138:5: ( exitClass | exitMethod | exitConstructor | exitParams | listaVarDeclAtribuicao | atribuicao | addMult | subDivExit | acessoCampo | vetorExpr | chamadaMetodo | chamadaMetodoSemParams )
+            int alt2=12;
+            alt2 = dfa2.predict(input);
             switch (alt2) {
                 case 1 :
-                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:137:9: exitClass
+                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:138:9: exitClass
                     {
                     pushFollow(FOLLOW_exitClass_in_bottomup129);
                     exitClass();
@@ -446,7 +380,7 @@ public class Ref extends TreeFilter {
                     }
                     break;
                 case 2 :
-                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:138:9: exitMethod
+                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:139:9: exitMethod
                     {
                     pushFollow(FOLLOW_exitMethod_in_bottomup139);
                     exitMethod();
@@ -457,7 +391,7 @@ public class Ref extends TreeFilter {
                     }
                     break;
                 case 3 :
-                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:139:9: exitConstructor
+                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:140:9: exitConstructor
                     {
                     pushFollow(FOLLOW_exitConstructor_in_bottomup149);
                     exitConstructor();
@@ -468,7 +402,7 @@ public class Ref extends TreeFilter {
                     }
                     break;
                 case 4 :
-                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:140:9: exitParams
+                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:141:9: exitParams
                     {
                     pushFollow(FOLLOW_exitParams_in_bottomup159);
                     exitParams();
@@ -479,7 +413,7 @@ public class Ref extends TreeFilter {
                     }
                     break;
                 case 5 :
-                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:141:9: listaVarDeclAtribuicao
+                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:142:9: listaVarDeclAtribuicao
                     {
                     pushFollow(FOLLOW_listaVarDeclAtribuicao_in_bottomup169);
                     listaVarDeclAtribuicao();
@@ -490,7 +424,7 @@ public class Ref extends TreeFilter {
                     }
                     break;
                 case 6 :
-                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:142:9: atribuicao
+                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:143:9: atribuicao
                     {
                     pushFollow(FOLLOW_atribuicao_in_bottomup179);
                     atribuicao();
@@ -501,7 +435,7 @@ public class Ref extends TreeFilter {
                     }
                     break;
                 case 7 :
-                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:143:9: addMult
+                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:144:9: addMult
                     {
                     pushFollow(FOLLOW_addMult_in_bottomup189);
                     addMult();
@@ -512,7 +446,7 @@ public class Ref extends TreeFilter {
                     }
                     break;
                 case 8 :
-                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:144:9: subDivExit
+                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:145:9: subDivExit
                     {
                     pushFollow(FOLLOW_subDivExit_in_bottomup199);
                     subDivExit();
@@ -523,7 +457,7 @@ public class Ref extends TreeFilter {
                     }
                     break;
                 case 9 :
-                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:145:9: acessoCampo
+                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:146:9: acessoCampo
                     {
                     pushFollow(FOLLOW_acessoCampo_in_bottomup209);
                     acessoCampo();
@@ -534,7 +468,7 @@ public class Ref extends TreeFilter {
                     }
                     break;
                 case 10 :
-                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:146:9: vetorExpr
+                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:147:9: vetorExpr
                     {
                     pushFollow(FOLLOW_vetorExpr_in_bottomup219);
                     vetorExpr();
@@ -545,10 +479,21 @@ public class Ref extends TreeFilter {
                     }
                     break;
                 case 11 :
-                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:147:9: chamadaMetodo
+                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:148:9: chamadaMetodo
                     {
                     pushFollow(FOLLOW_chamadaMetodo_in_bottomup229);
                     chamadaMetodo();
+
+                    state._fsp--;
+                    if (state.failed) return ;
+
+                    }
+                    break;
+                case 12 :
+                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:149:9: chamadaMetodoSemParams
+                    {
+                    pushFollow(FOLLOW_chamadaMetodoSemParams_in_bottomup239);
+                    chamadaMetodoSemParams();
 
                     state._fsp--;
                     if (state.failed) return ;
@@ -573,21 +518,21 @@ public class Ref extends TreeFilter {
 
 
     // $ANTLR start "enterClass"
-    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:150:1: enterClass : ^( CLASSE nome= ID ( ^( EXTENDS sup= ID ) )? ( . )+ ) ;
+    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:152:1: enterClass : ^( CLASSE nome= ID ( ^( EXTENDS sup= ID ) )? ( . )+ ) ;
     public final void enterClass() throws RecognitionException {
         TradutorAST nome=null;
         TradutorAST sup=null;
 
         try {
-            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:151:5: ( ^( CLASSE nome= ID ( ^( EXTENDS sup= ID ) )? ( . )+ ) )
-            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:151:9: ^( CLASSE nome= ID ( ^( EXTENDS sup= ID ) )? ( . )+ )
+            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:153:5: ( ^( CLASSE nome= ID ( ^( EXTENDS sup= ID ) )? ( . )+ ) )
+            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:153:9: ^( CLASSE nome= ID ( ^( EXTENDS sup= ID ) )? ( . )+ )
             {
-            match(input,CLASSE,FOLLOW_CLASSE_in_enterClass249); if (state.failed) return ;
+            match(input,CLASSE,FOLLOW_CLASSE_in_enterClass259); if (state.failed) return ;
 
             match(input, Token.DOWN, null); if (state.failed) return ;
-            nome=(TradutorAST)match(input,ID,FOLLOW_ID_in_enterClass255); if (state.failed) return ;
+            nome=(TradutorAST)match(input,ID,FOLLOW_ID_in_enterClass265); if (state.failed) return ;
 
-            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:151:28: ( ^( EXTENDS sup= ID ) )?
+            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:153:28: ( ^( EXTENDS sup= ID ) )?
             int alt3=2;
             int LA3_0 = input.LA(1);
 
@@ -608,12 +553,12 @@ public class Ref extends TreeFilter {
             }
             switch (alt3) {
                 case 1 :
-                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:151:29: ^( EXTENDS sup= ID )
+                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:153:29: ^( EXTENDS sup= ID )
                     {
-                    match(input,EXTENDS,FOLLOW_EXTENDS_in_enterClass259); if (state.failed) return ;
+                    match(input,EXTENDS,FOLLOW_EXTENDS_in_enterClass269); if (state.failed) return ;
 
                     match(input, Token.DOWN, null); if (state.failed) return ;
-                    sup=(TradutorAST)match(input,ID,FOLLOW_ID_in_enterClass265); if (state.failed) return ;
+                    sup=(TradutorAST)match(input,ID,FOLLOW_ID_in_enterClass275); if (state.failed) return ;
 
                     match(input, Token.UP, null); if (state.failed) return ;
 
@@ -624,7 +569,7 @@ public class Ref extends TreeFilter {
             }
 
 
-            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:151:51: ( . )+
+            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:153:51: ( . )+
             int cnt4=0;
             loop4:
             do {
@@ -641,7 +586,7 @@ public class Ref extends TreeFilter {
 
                 switch (alt4) {
             	case 1 :
-            	    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:151:51: .
+            	    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:153:51: .
             	    {
             	    matchAny(input); if (state.failed) return ;
 
@@ -690,13 +635,13 @@ public class Ref extends TreeFilter {
 
 
     // $ANTLR start "exitClass"
-    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:163:1: exitClass : CLASSE ;
+    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:165:1: exitClass : CLASSE ;
     public final void exitClass() throws RecognitionException {
         try {
-            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:164:5: ( CLASSE )
-            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:164:9: CLASSE
+            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:166:5: ( CLASSE )
+            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:166:9: CLASSE
             {
-            match(input,CLASSE,FOLLOW_CLASSE_in_exitClass301); if (state.failed) return ;
+            match(input,CLASSE,FOLLOW_CLASSE_in_exitClass311); if (state.failed) return ;
 
             if ( state.backtracking==1 ) {
                             try {
@@ -732,26 +677,27 @@ public class Ref extends TreeFilter {
 
 
     // $ANTLR start "enterMethod"
-    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:182:1: enterMethod : ^( METHOD_DECL (st= . )? tp= . ID (parm= . )* ^( BLOCO ( . )* ) ) ;
+    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:184:1: enterMethod : ^( METHOD_DECL (st= . )? tp= . ID (vet= . )? ( ^(parm= PARAMS ( . )+ ) )* ^( BLOCO ( . )* ) ) ;
     public final void enterMethod() throws RecognitionException {
+        TradutorAST parm=null;
         TradutorAST ID1=null;
         TradutorAST st=null;
         TradutorAST tp=null;
-        TradutorAST parm=null;
+        TradutorAST vet=null;
 
         try {
-            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:183:5: ( ^( METHOD_DECL (st= . )? tp= . ID (parm= . )* ^( BLOCO ( . )* ) ) )
-            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:183:8: ^( METHOD_DECL (st= . )? tp= . ID (parm= . )* ^( BLOCO ( . )* ) )
+            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:185:5: ( ^( METHOD_DECL (st= . )? tp= . ID (vet= . )? ( ^(parm= PARAMS ( . )+ ) )* ^( BLOCO ( . )* ) ) )
+            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:185:8: ^( METHOD_DECL (st= . )? tp= . ID (vet= . )? ( ^(parm= PARAMS ( . )+ ) )* ^( BLOCO ( . )* ) )
             {
-            match(input,METHOD_DECL,FOLLOW_METHOD_DECL_in_enterMethod334); if (state.failed) return ;
+            match(input,METHOD_DECL,FOLLOW_METHOD_DECL_in_enterMethod344); if (state.failed) return ;
 
             match(input, Token.DOWN, null); if (state.failed) return ;
-            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:183:25: (st= . )?
+            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:185:25: (st= . )?
             int alt5=2;
             alt5 = dfa5.predict(input);
             switch (alt5) {
                 case 1 :
-                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:183:25: st= .
+                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:185:25: st= .
                     {
                     st=(TradutorAST)input.LT(1);
 
@@ -767,51 +713,111 @@ public class Ref extends TreeFilter {
 
             matchAny(input); if (state.failed) return ;
 
-            ID1=(TradutorAST)match(input,ID,FOLLOW_ID_in_enterMethod349); if (state.failed) return ;
+            ID1=(TradutorAST)match(input,ID,FOLLOW_ID_in_enterMethod359); if (state.failed) return ;
 
-            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:183:45: (parm= . )*
-            loop6:
+            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:185:44: (vet= . )?
+            int alt6=2;
+            alt6 = dfa6.predict(input);
+            switch (alt6) {
+                case 1 :
+                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:185:44: vet= .
+                    {
+                    vet=(TradutorAST)input.LT(1);
+
+                    matchAny(input); if (state.failed) return ;
+
+                    }
+                    break;
+
+            }
+
+
+            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:185:49: ( ^(parm= PARAMS ( . )+ ) )*
+            loop8:
             do {
-                int alt6=2;
-                alt6 = dfa6.predict(input);
-                switch (alt6) {
-            	case 1 :
-            	    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:183:45: parm= .
-            	    {
-            	    parm=(TradutorAST)input.LT(1);
+                int alt8=2;
+                int LA8_0 = input.LA(1);
 
-            	    matchAny(input); if (state.failed) return ;
+                if ( (LA8_0==PARAMS) ) {
+                    alt8=1;
+                }
+
+
+                switch (alt8) {
+            	case 1 :
+            	    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:185:50: ^(parm= PARAMS ( . )+ )
+            	    {
+            	    parm=(TradutorAST)match(input,PARAMS,FOLLOW_PARAMS_in_enterMethod374); if (state.failed) return ;
+
+            	    match(input, Token.DOWN, null); if (state.failed) return ;
+            	    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:185:66: ( . )+
+            	    int cnt7=0;
+            	    loop7:
+            	    do {
+            	        int alt7=2;
+            	        int LA7_0 = input.LA(1);
+
+            	        if ( ((LA7_0 >= BLOCO && LA7_0 <= 74)) ) {
+            	            alt7=1;
+            	        }
+            	        else if ( (LA7_0==UP) ) {
+            	            alt7=2;
+            	        }
+
+
+            	        switch (alt7) {
+            	    	case 1 :
+            	    	    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:185:66: .
+            	    	    {
+            	    	    matchAny(input); if (state.failed) return ;
+
+            	    	    }
+            	    	    break;
+
+            	    	default :
+            	    	    if ( cnt7 >= 1 ) break loop7;
+            	    	    if (state.backtracking>0) {state.failed=true; return ;}
+            	                EarlyExitException eee =
+            	                    new EarlyExitException(7, input);
+            	                throw eee;
+            	        }
+            	        cnt7++;
+            	    } while (true);
+
+
+            	    match(input, Token.UP, null); if (state.failed) return ;
+
 
             	    }
             	    break;
 
             	default :
-            	    break loop6;
+            	    break loop8;
                 }
             } while (true);
 
 
-            match(input,BLOCO,FOLLOW_BLOCO_in_enterMethod359); if (state.failed) return ;
+            match(input,BLOCO,FOLLOW_BLOCO_in_enterMethod383); if (state.failed) return ;
 
             if ( input.LA(1)==Token.DOWN ) {
                 match(input, Token.DOWN, null); if (state.failed) return ;
-                // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:183:58: ( . )*
-                loop7:
+                // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:185:80: ( . )*
+                loop9:
                 do {
-                    int alt7=2;
-                    int LA7_0 = input.LA(1);
+                    int alt9=2;
+                    int LA9_0 = input.LA(1);
 
-                    if ( ((LA7_0 >= BLOCO && LA7_0 <= 74)) ) {
-                        alt7=1;
+                    if ( ((LA9_0 >= BLOCO && LA9_0 <= 74)) ) {
+                        alt9=1;
                     }
-                    else if ( (LA7_0==UP) ) {
-                        alt7=2;
+                    else if ( (LA9_0==UP) ) {
+                        alt9=2;
                     }
 
 
-                    switch (alt7) {
+                    switch (alt9) {
                 	case 1 :
-                	    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:183:58: .
+                	    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:185:80: .
                 	    {
                 	    matchAny(input); if (state.failed) return ;
 
@@ -819,7 +825,7 @@ public class Ref extends TreeFilter {
                 	    break;
 
                 	default :
-                	    break loop7;
+                	    break loop9;
                     }
                 } while (true);
 
@@ -834,7 +840,9 @@ public class Ref extends TreeFilter {
             if ( state.backtracking==1 ) {
                     	metodoAtual = (SimboloMetodo) ID1.simbolo;
             	    
-            	    	tipoMetodo = tp.getText(); 
+            	    	tipoMetodo = tp.getText();
+            	    	
+            	    	tipoRetornoVet = vet != null && vet.getText().equals("[]") && tipoMetodo.equals("int");
             	    	
             	    	if (parm == null) {
             	    	
@@ -845,7 +853,9 @@ public class Ref extends TreeFilter {
             	        
             	                Tradutor.buffer.append( (ID1!=null?ID1.getText():null) + "()");
             	                
-            	                if (tipoMetodo.equals("void"))
+            	                if (tipoRetornoVet)
+            	                	Tradutor.buffer.append("[I;");
+            	                else if (tipoMetodo.equals("void"))
             				Tradutor.buffer.append("V");
             			else if (tipoMetodo.equals("int"))
             				Tradutor.buffer.append("I");
@@ -890,63 +900,106 @@ public class Ref extends TreeFilter {
 
 
     // $ANTLR start "enterConstructor"
-    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:226:1: enterConstructor : ^( CONSTR_DECL ID (parm= . )* ^( BLOCO ( . )* ) ) ;
+    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:232:1: enterConstructor : ^( CONSTR_DECL ID ( ^(parm= PARAMS ( . )+ ) )* ^( BLOCO ( . )* ) ) ;
     public final void enterConstructor() throws RecognitionException {
-        TradutorAST ID2=null;
         TradutorAST parm=null;
+        TradutorAST ID2=null;
 
         try {
-            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:227:2: ( ^( CONSTR_DECL ID (parm= . )* ^( BLOCO ( . )* ) ) )
-            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:227:5: ^( CONSTR_DECL ID (parm= . )* ^( BLOCO ( . )* ) )
+            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:233:2: ( ^( CONSTR_DECL ID ( ^(parm= PARAMS ( . )+ ) )* ^( BLOCO ( . )* ) ) )
+            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:233:5: ^( CONSTR_DECL ID ( ^(parm= PARAMS ( . )+ ) )* ^( BLOCO ( . )* ) )
             {
-            match(input,CONSTR_DECL,FOLLOW_CONSTR_DECL_in_enterConstructor395); if (state.failed) return ;
+            match(input,CONSTR_DECL,FOLLOW_CONSTR_DECL_in_enterConstructor419); if (state.failed) return ;
 
             match(input, Token.DOWN, null); if (state.failed) return ;
-            ID2=(TradutorAST)match(input,ID,FOLLOW_ID_in_enterConstructor397); if (state.failed) return ;
+            ID2=(TradutorAST)match(input,ID,FOLLOW_ID_in_enterConstructor421); if (state.failed) return ;
 
-            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:227:27: (parm= . )*
-            loop8:
+            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:233:22: ( ^(parm= PARAMS ( . )+ ) )*
+            loop11:
             do {
-                int alt8=2;
-                alt8 = dfa8.predict(input);
-                switch (alt8) {
-            	case 1 :
-            	    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:227:27: parm= .
-            	    {
-            	    parm=(TradutorAST)input.LT(1);
+                int alt11=2;
+                int LA11_0 = input.LA(1);
 
-            	    matchAny(input); if (state.failed) return ;
+                if ( (LA11_0==PARAMS) ) {
+                    alt11=1;
+                }
+
+
+                switch (alt11) {
+            	case 1 :
+            	    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:233:23: ^(parm= PARAMS ( . )+ )
+            	    {
+            	    parm=(TradutorAST)match(input,PARAMS,FOLLOW_PARAMS_in_enterConstructor429); if (state.failed) return ;
+
+            	    match(input, Token.DOWN, null); if (state.failed) return ;
+            	    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:233:39: ( . )+
+            	    int cnt10=0;
+            	    loop10:
+            	    do {
+            	        int alt10=2;
+            	        int LA10_0 = input.LA(1);
+
+            	        if ( ((LA10_0 >= BLOCO && LA10_0 <= 74)) ) {
+            	            alt10=1;
+            	        }
+            	        else if ( (LA10_0==UP) ) {
+            	            alt10=2;
+            	        }
+
+
+            	        switch (alt10) {
+            	    	case 1 :
+            	    	    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:233:39: .
+            	    	    {
+            	    	    matchAny(input); if (state.failed) return ;
+
+            	    	    }
+            	    	    break;
+
+            	    	default :
+            	    	    if ( cnt10 >= 1 ) break loop10;
+            	    	    if (state.backtracking>0) {state.failed=true; return ;}
+            	                EarlyExitException eee =
+            	                    new EarlyExitException(10, input);
+            	                throw eee;
+            	        }
+            	        cnt10++;
+            	    } while (true);
+
+
+            	    match(input, Token.UP, null); if (state.failed) return ;
+
 
             	    }
             	    break;
 
             	default :
-            	    break loop8;
+            	    break loop11;
                 }
             } while (true);
 
 
-            match(input,BLOCO,FOLLOW_BLOCO_in_enterConstructor407); if (state.failed) return ;
+            match(input,BLOCO,FOLLOW_BLOCO_in_enterConstructor438); if (state.failed) return ;
 
             if ( input.LA(1)==Token.DOWN ) {
                 match(input, Token.DOWN, null); if (state.failed) return ;
-                // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:227:40: ( . )*
-                loop9:
+                // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:233:53: ( . )*
+                loop12:
                 do {
-                    int alt9=2;
-                    int LA9_0 = input.LA(1);
+                    int alt12=2;
+                    int LA12_0 = input.LA(1);
 
-                    if ( ((LA9_0 >= BLOCO && LA9_0 <= 74)) ) {
-                        alt9=1;
+                    if ( ((LA12_0 >= BLOCO && LA12_0 <= 74)) ) {
+                        alt12=1;
                     }
-                    else if ( (LA9_0==UP) ) {
-                        alt9=2;
+                    else if ( (LA12_0==UP) ) {
+                        alt12=2;
                     }
 
 
-                    switch (alt9) {
+                    switch (alt12) {
                 	case 1 :
-                	    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:227:40: .
+                	    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:233:53: .
                 	    {
                 	    matchAny(input); if (state.failed) return ;
 
@@ -954,7 +1007,7 @@ public class Ref extends TreeFilter {
                 	    break;
 
                 	default :
-                	    break loop9;
+                	    break loop12;
                     }
                 } while (true);
 
@@ -1014,13 +1067,13 @@ public class Ref extends TreeFilter {
 
 
     // $ANTLR start "exitMethod"
-    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:259:1: exitMethod : METHOD_DECL ;
+    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:265:1: exitMethod : METHOD_DECL ;
     public final void exitMethod() throws RecognitionException {
         try {
-            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:260:5: ( METHOD_DECL )
-            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:260:9: METHOD_DECL
+            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:266:5: ( METHOD_DECL )
+            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:266:9: METHOD_DECL
             {
-            match(input,METHOD_DECL,FOLLOW_METHOD_DECL_in_exitMethod446); if (state.failed) return ;
+            match(input,METHOD_DECL,FOLLOW_METHOD_DECL_in_exitMethod477); if (state.failed) return ;
 
             if ( state.backtracking==1 ) {
             	        if (tipoMetodo.equals("void"))
@@ -1052,13 +1105,13 @@ public class Ref extends TreeFilter {
 
 
     // $ANTLR start "exitConstructor"
-    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:274:1: exitConstructor : CONSTR_DECL ;
+    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:280:1: exitConstructor : CONSTR_DECL ;
     public final void exitConstructor() throws RecognitionException {
         try {
-            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:275:5: ( CONSTR_DECL )
-            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:275:9: CONSTR_DECL
+            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:281:5: ( CONSTR_DECL )
+            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:281:9: CONSTR_DECL
             {
-            match(input,CONSTR_DECL,FOLLOW_CONSTR_DECL_in_exitConstructor475); if (state.failed) return ;
+            match(input,CONSTR_DECL,FOLLOW_CONSTR_DECL_in_exitConstructor506); if (state.failed) return ;
 
             if ( state.backtracking==1 ) {
                     	Tradutor.buffer.append("return\n");		
@@ -1083,34 +1136,34 @@ public class Ref extends TreeFilter {
 
 
     // $ANTLR start "enterParam"
-    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:282:1: enterParam : ^( PARAM tp= . ID (vet= . )? ) ;
+    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:288:1: enterParam : ^( PARAM tp= . ID (vet= . )? ) ;
     public final void enterParam() throws RecognitionException, SyntacticException {
         TradutorAST tp=null;
         TradutorAST vet=null;
 
         try {
-            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:283:5: ( ^( PARAM tp= . ID (vet= . )? ) )
-            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:283:7: ^( PARAM tp= . ID (vet= . )? )
+            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:289:5: ( ^( PARAM tp= . ID (vet= . )? ) )
+            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:289:7: ^( PARAM tp= . ID (vet= . )? )
             {
-            match(input,PARAM,FOLLOW_PARAM_in_enterParam509); if (state.failed) return ;
+            match(input,PARAM,FOLLOW_PARAM_in_enterParam540); if (state.failed) return ;
 
             match(input, Token.DOWN, null); if (state.failed) return ;
             tp=(TradutorAST)input.LT(1);
 
             matchAny(input); if (state.failed) return ;
 
-            match(input,ID,FOLLOW_ID_in_enterParam517); if (state.failed) return ;
+            match(input,ID,FOLLOW_ID_in_enterParam548); if (state.failed) return ;
 
-            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:283:29: (vet= . )?
-            int alt10=2;
-            int LA10_0 = input.LA(1);
+            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:289:29: (vet= . )?
+            int alt13=2;
+            int LA13_0 = input.LA(1);
 
-            if ( ((LA10_0 >= BLOCO && LA10_0 <= 74)) ) {
-                alt10=1;
+            if ( ((LA13_0 >= BLOCO && LA13_0 <= 74)) ) {
+                alt13=1;
             }
-            switch (alt10) {
+            switch (alt13) {
                 case 1 :
-                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:283:29: vet= .
+                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:289:29: vet= .
                     {
                     vet=(TradutorAST)input.LT(1);
 
@@ -1163,18 +1216,20 @@ public class Ref extends TreeFilter {
 
 
     // $ANTLR start "exitParams"
-    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:305:1: exitParams : PARAMS ;
+    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:311:1: exitParams : PARAMS ;
     public final void exitParams() throws RecognitionException {
         try {
-            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:306:2: ( PARAMS )
-            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:306:4: PARAMS
+            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:312:2: ( PARAMS )
+            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:312:4: PARAMS
             {
-            match(input,PARAMS,FOLLOW_PARAMS_in_exitParams554); if (state.failed) return ;
+            match(input,PARAMS,FOLLOW_PARAMS_in_exitParams585); if (state.failed) return ;
 
             if ( state.backtracking==1 ) {
             		linha += ")";
             		
-            		if (tipoMetodo.equals("void"))
+            		if (tipoRetornoVet)
+            			linha += "[;";
+            		else if (tipoMetodo.equals("void"))
             			linha += "V";
             		else if (tipoMetodo.equals("int"))
             			linha += "I";
@@ -1211,7 +1266,7 @@ public class Ref extends TreeFilter {
 
 
     // $ANTLR start "enterField"
-    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:327:1: enterField : ^( FIELD_DECL (st= . )? tp= . ID (vet= . )? ) ;
+    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:335:1: enterField : ^( FIELD_DECL (st= . )? tp= . ID (vet= . )? ) ;
     public final Ref.enterField_return enterField() throws RecognitionException, SyntacticException {
         Ref.enterField_return retval = new Ref.enterField_return();
         retval.start = input.LT(1);
@@ -1223,18 +1278,18 @@ public class Ref extends TreeFilter {
         TradutorAST vet=null;
 
         try {
-            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:328:5: ( ^( FIELD_DECL (st= . )? tp= . ID (vet= . )? ) )
-            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:328:9: ^( FIELD_DECL (st= . )? tp= . ID (vet= . )? )
+            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:336:5: ( ^( FIELD_DECL (st= . )? tp= . ID (vet= . )? ) )
+            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:336:9: ^( FIELD_DECL (st= . )? tp= . ID (vet= . )? )
             {
-            match(input,FIELD_DECL,FOLLOW_FIELD_DECL_in_enterField575); if (state.failed) return retval;
+            match(input,FIELD_DECL,FOLLOW_FIELD_DECL_in_enterField606); if (state.failed) return retval;
 
             match(input, Token.DOWN, null); if (state.failed) return retval;
-            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:328:25: (st= . )?
-            int alt11=2;
-            alt11 = dfa11.predict(input);
-            switch (alt11) {
+            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:336:25: (st= . )?
+            int alt14=2;
+            alt14 = dfa14.predict(input);
+            switch (alt14) {
                 case 1 :
-                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:328:25: st= .
+                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:336:25: st= .
                     {
                     st=(TradutorAST)input.LT(1);
 
@@ -1250,18 +1305,18 @@ public class Ref extends TreeFilter {
 
             matchAny(input); if (state.failed) return retval;
 
-            ID3=(TradutorAST)match(input,ID,FOLLOW_ID_in_enterField590); if (state.failed) return retval;
+            ID3=(TradutorAST)match(input,ID,FOLLOW_ID_in_enterField621); if (state.failed) return retval;
 
-            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:328:44: (vet= . )?
-            int alt12=2;
-            int LA12_0 = input.LA(1);
+            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:336:44: (vet= . )?
+            int alt15=2;
+            int LA15_0 = input.LA(1);
 
-            if ( ((LA12_0 >= BLOCO && LA12_0 <= 74)) ) {
-                alt12=1;
+            if ( ((LA15_0 >= BLOCO && LA15_0 <= 74)) ) {
+                alt15=1;
             }
-            switch (alt12) {
+            switch (alt15) {
                 case 1 :
-                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:328:44: vet= .
+                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:336:44: vet= .
                     {
                     vet=(TradutorAST)input.LT(1);
 
@@ -1314,7 +1369,7 @@ public class Ref extends TreeFilter {
 
 
     // $ANTLR start "listaVarDeclAtribuicao"
-    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:350:1: listaVarDeclAtribuicao : ^( LISTA_VAR_DECL ^( VAR_DECL tp= . ID (vet= . )? ^( EXPR a= . ) ) ( . )* ) ;
+    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:358:1: listaVarDeclAtribuicao : ^( LISTA_VAR_DECL ^( VAR_DECL tp= . ID (vet= . )? ^( EXPR a= . ) ) ( . )* ) ;
     public final void listaVarDeclAtribuicao() throws RecognitionException {
         TradutorAST ID4=null;
         TradutorAST tp=null;
@@ -1322,56 +1377,56 @@ public class Ref extends TreeFilter {
         TradutorAST a=null;
 
         try {
-            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:351:5: ( ^( LISTA_VAR_DECL ^( VAR_DECL tp= . ID (vet= . )? ^( EXPR a= . ) ) ( . )* ) )
-            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:351:9: ^( LISTA_VAR_DECL ^( VAR_DECL tp= . ID (vet= . )? ^( EXPR a= . ) ) ( . )* )
+            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:359:5: ( ^( LISTA_VAR_DECL ^( VAR_DECL tp= . ID (vet= . )? ^( EXPR a= . ) ) ( . )* ) )
+            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:359:9: ^( LISTA_VAR_DECL ^( VAR_DECL tp= . ID (vet= . )? ^( EXPR a= . ) ) ( . )* )
             {
-            match(input,LISTA_VAR_DECL,FOLLOW_LISTA_VAR_DECL_in_listaVarDeclAtribuicao634); if (state.failed) return ;
+            match(input,LISTA_VAR_DECL,FOLLOW_LISTA_VAR_DECL_in_listaVarDeclAtribuicao665); if (state.failed) return ;
 
             match(input, Token.DOWN, null); if (state.failed) return ;
-            match(input,VAR_DECL,FOLLOW_VAR_DECL_in_listaVarDeclAtribuicao637); if (state.failed) return ;
+            match(input,VAR_DECL,FOLLOW_VAR_DECL_in_listaVarDeclAtribuicao668); if (state.failed) return ;
 
             match(input, Token.DOWN, null); if (state.failed) return ;
             tp=(TradutorAST)input.LT(1);
 
             matchAny(input); if (state.failed) return ;
 
-            ID4=(TradutorAST)match(input,ID,FOLLOW_ID_in_listaVarDeclAtribuicao645); if (state.failed) return ;
+            ID4=(TradutorAST)match(input,ID,FOLLOW_ID_in_listaVarDeclAtribuicao676); if (state.failed) return ;
 
-            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:351:51: (vet= . )?
-            int alt13=2;
-            int LA13_0 = input.LA(1);
+            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:359:51: (vet= . )?
+            int alt16=2;
+            int LA16_0 = input.LA(1);
 
-            if ( (LA13_0==EXPR) ) {
-                int LA13_1 = input.LA(2);
+            if ( (LA16_0==EXPR) ) {
+                int LA16_1 = input.LA(2);
 
-                if ( (LA13_1==DOWN) ) {
-                    int LA13_3 = input.LA(3);
+                if ( (LA16_1==DOWN) ) {
+                    int LA16_3 = input.LA(3);
 
-                    if ( ((LA13_3 >= BLOCO && LA13_3 <= 74)) ) {
-                        int LA13_4 = input.LA(4);
+                    if ( ((LA16_3 >= BLOCO && LA16_3 <= 74)) ) {
+                        int LA16_4 = input.LA(4);
 
-                        if ( (LA13_4==UP) ) {
-                            int LA13_6 = input.LA(5);
+                        if ( (LA16_4==UP) ) {
+                            int LA16_6 = input.LA(5);
 
-                            if ( (LA13_6==EXPR) ) {
-                                alt13=1;
+                            if ( (LA16_6==EXPR) ) {
+                                alt16=1;
                             }
                         }
-                        else if ( ((LA13_4 >= BLOCO && LA13_4 <= 74)) ) {
-                            alt13=1;
+                        else if ( ((LA16_4 >= BLOCO && LA16_4 <= 74)) ) {
+                            alt16=1;
                         }
                     }
                 }
-                else if ( (LA13_1==EXPR) ) {
-                    alt13=1;
+                else if ( (LA16_1==EXPR) ) {
+                    alt16=1;
                 }
             }
-            else if ( ((LA13_0 >= BLOCO && LA13_0 <= DOWHILE)||(LA13_0 >= EXTENDS && LA13_0 <= 74)) ) {
-                alt13=1;
+            else if ( ((LA16_0 >= BLOCO && LA16_0 <= DOWHILE)||(LA16_0 >= EXTENDS && LA16_0 <= 74)) ) {
+                alt16=1;
             }
-            switch (alt13) {
+            switch (alt16) {
                 case 1 :
-                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:351:51: vet= .
+                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:359:51: vet= .
                     {
                     vet=(TradutorAST)input.LT(1);
 
@@ -1383,7 +1438,7 @@ public class Ref extends TreeFilter {
             }
 
 
-            match(input,EXPR,FOLLOW_EXPR_in_listaVarDeclAtribuicao654); if (state.failed) return ;
+            match(input,EXPR,FOLLOW_EXPR_in_listaVarDeclAtribuicao685); if (state.failed) return ;
 
             match(input, Token.DOWN, null); if (state.failed) return ;
             a=(TradutorAST)input.LT(1);
@@ -1396,23 +1451,23 @@ public class Ref extends TreeFilter {
             match(input, Token.UP, null); if (state.failed) return ;
 
 
-            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:351:70: ( . )*
-            loop14:
+            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:359:70: ( . )*
+            loop17:
             do {
-                int alt14=2;
-                int LA14_0 = input.LA(1);
+                int alt17=2;
+                int LA17_0 = input.LA(1);
 
-                if ( ((LA14_0 >= BLOCO && LA14_0 <= 74)) ) {
-                    alt14=1;
+                if ( ((LA17_0 >= BLOCO && LA17_0 <= 74)) ) {
+                    alt17=1;
                 }
-                else if ( (LA14_0==UP) ) {
-                    alt14=2;
+                else if ( (LA17_0==UP) ) {
+                    alt17=2;
                 }
 
 
-                switch (alt14) {
+                switch (alt17) {
             	case 1 :
-            	    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:351:70: .
+            	    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:359:70: .
             	    {
             	    matchAny(input); if (state.failed) return ;
 
@@ -1420,7 +1475,7 @@ public class Ref extends TreeFilter {
             	    break;
 
             	default :
-            	    break loop14;
+            	    break loop17;
                 }
             } while (true);
 
@@ -1468,16 +1523,16 @@ public class Ref extends TreeFilter {
 
 
     // $ANTLR start "atribuicao"
-    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:400:1: atribuicao : ^( '=' a= . b= . ) ;
+    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:383:1: atribuicao : ^( '=' a= . b= . ) ;
     public final void atribuicao() throws RecognitionException {
         TradutorAST a=null;
         TradutorAST b=null;
 
         try {
-            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:401:2: ( ^( '=' a= . b= . ) )
-            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:401:4: ^( '=' a= . b= . )
+            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:384:2: ( ^( '=' a= . b= . ) )
+            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:384:4: ^( '=' a= . b= . )
             {
-            match(input,53,FOLLOW_53_in_atribuicao698); if (state.failed) return ;
+            match(input,53,FOLLOW_53_in_atribuicao726); if (state.failed) return ;
 
             match(input, Token.DOWN, null); if (state.failed) return ;
             a=(TradutorAST)input.LT(1);
@@ -1532,46 +1587,46 @@ public class Ref extends TreeFilter {
 
 
     // $ANTLR start "addMult"
-    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:426:1: addMult : ^( (op= '+' |op= '*' ) a= . b= . ) ;
+    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:409:1: addMult : ^( (op= '+' |op= '*' ) a= . b= . ) ;
     public final void addMult() throws RecognitionException {
         TradutorAST op=null;
         TradutorAST a=null;
         TradutorAST b=null;
 
         try {
-            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:427:2: ( ^( (op= '+' |op= '*' ) a= . b= . ) )
-            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:427:10: ^( (op= '+' |op= '*' ) a= . b= . )
+            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:410:2: ( ^( (op= '+' |op= '*' ) a= . b= . ) )
+            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:410:10: ^( (op= '+' |op= '*' ) a= . b= . )
             {
-            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:427:12: (op= '+' |op= '*' )
-            int alt15=2;
-            int LA15_0 = input.LA(1);
+            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:410:12: (op= '+' |op= '*' )
+            int alt18=2;
+            int LA18_0 = input.LA(1);
 
-            if ( (LA15_0==43) ) {
-                alt15=1;
+            if ( (LA18_0==43) ) {
+                alt18=1;
             }
-            else if ( (LA15_0==42) ) {
-                alt15=2;
+            else if ( (LA18_0==42) ) {
+                alt18=2;
             }
             else {
                 if (state.backtracking>0) {state.failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 15, 0, input);
+                    new NoViableAltException("", 18, 0, input);
 
                 throw nvae;
 
             }
-            switch (alt15) {
+            switch (alt18) {
                 case 1 :
-                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:427:13: op= '+'
+                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:410:13: op= '+'
                     {
-                    op=(TradutorAST)match(input,43,FOLLOW_43_in_addMult738); if (state.failed) return ;
+                    op=(TradutorAST)match(input,43,FOLLOW_43_in_addMult766); if (state.failed) return ;
 
                     }
                     break;
                 case 2 :
-                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:427:24: op= '*'
+                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:410:24: op= '*'
                     {
-                    op=(TradutorAST)match(input,42,FOLLOW_42_in_addMult746); if (state.failed) return ;
+                    op=(TradutorAST)match(input,42,FOLLOW_42_in_addMult774); if (state.failed) return ;
 
                     }
                     break;
@@ -1642,61 +1697,61 @@ public class Ref extends TreeFilter {
 
 
     // $ANTLR start "subDivEnter"
-    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:462:1: subDivEnter : ^( (op= '-' |op= '/' |op= '%' ) a= . . ) ;
+    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:445:1: subDivEnter : ^( (op= '-' |op= '/' |op= '%' ) a= . . ) ;
     public final void subDivEnter() throws RecognitionException {
         TradutorAST op=null;
         TradutorAST a=null;
 
         try {
-            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:463:2: ( ^( (op= '-' |op= '/' |op= '%' ) a= . . ) )
-            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:463:4: ^( (op= '-' |op= '/' |op= '%' ) a= . . )
+            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:446:2: ( ^( (op= '-' |op= '/' |op= '%' ) a= . . ) )
+            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:446:4: ^( (op= '-' |op= '/' |op= '%' ) a= . . )
             {
-            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:463:6: (op= '-' |op= '/' |op= '%' )
-            int alt16=3;
+            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:446:6: (op= '-' |op= '/' |op= '%' )
+            int alt19=3;
             switch ( input.LA(1) ) {
             case 46:
                 {
-                alt16=1;
+                alt19=1;
                 }
                 break;
             case 49:
                 {
-                alt16=2;
+                alt19=2;
                 }
                 break;
             case 38:
                 {
-                alt16=3;
+                alt19=3;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 16, 0, input);
+                    new NoViableAltException("", 19, 0, input);
 
                 throw nvae;
 
             }
 
-            switch (alt16) {
+            switch (alt19) {
                 case 1 :
-                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:463:7: op= '-'
+                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:446:7: op= '-'
                     {
-                    op=(TradutorAST)match(input,46,FOLLOW_46_in_subDivEnter782); if (state.failed) return ;
+                    op=(TradutorAST)match(input,46,FOLLOW_46_in_subDivEnter810); if (state.failed) return ;
 
                     }
                     break;
                 case 2 :
-                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:463:18: op= '/'
+                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:446:18: op= '/'
                     {
-                    op=(TradutorAST)match(input,49,FOLLOW_49_in_subDivEnter790); if (state.failed) return ;
+                    op=(TradutorAST)match(input,49,FOLLOW_49_in_subDivEnter818); if (state.failed) return ;
 
                     }
                     break;
                 case 3 :
-                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:463:29: op= '%'
+                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:446:29: op= '%'
                     {
-                    op=(TradutorAST)match(input,38,FOLLOW_38_in_subDivEnter798); if (state.failed) return ;
+                    op=(TradutorAST)match(input,38,FOLLOW_38_in_subDivEnter826); if (state.failed) return ;
 
                     }
                     break;
@@ -1753,61 +1808,61 @@ public class Ref extends TreeFilter {
 
 
     // $ANTLR start "subDivExit"
-    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:486:1: subDivExit : ^( (op= '-' |op= '/' |op= '%' ) . b= . ) ;
+    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:469:1: subDivExit : ^( (op= '-' |op= '/' |op= '%' ) . b= . ) ;
     public final void subDivExit() throws RecognitionException {
         TradutorAST op=null;
         TradutorAST b=null;
 
         try {
-            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:487:2: ( ^( (op= '-' |op= '/' |op= '%' ) . b= . ) )
-            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:487:5: ^( (op= '-' |op= '/' |op= '%' ) . b= . )
+            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:470:2: ( ^( (op= '-' |op= '/' |op= '%' ) . b= . ) )
+            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:470:5: ^( (op= '-' |op= '/' |op= '%' ) . b= . )
             {
-            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:487:7: (op= '-' |op= '/' |op= '%' )
-            int alt17=3;
+            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:470:7: (op= '-' |op= '/' |op= '%' )
+            int alt20=3;
             switch ( input.LA(1) ) {
             case 46:
                 {
-                alt17=1;
+                alt20=1;
                 }
                 break;
             case 49:
                 {
-                alt17=2;
+                alt20=2;
                 }
                 break;
             case 38:
                 {
-                alt17=3;
+                alt20=3;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 17, 0, input);
+                    new NoViableAltException("", 20, 0, input);
 
                 throw nvae;
 
             }
 
-            switch (alt17) {
+            switch (alt20) {
                 case 1 :
-                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:487:8: op= '-'
+                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:470:8: op= '-'
                     {
-                    op=(TradutorAST)match(input,46,FOLLOW_46_in_subDivExit830); if (state.failed) return ;
+                    op=(TradutorAST)match(input,46,FOLLOW_46_in_subDivExit858); if (state.failed) return ;
 
                     }
                     break;
                 case 2 :
-                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:487:19: op= '/'
+                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:470:19: op= '/'
                     {
-                    op=(TradutorAST)match(input,49,FOLLOW_49_in_subDivExit838); if (state.failed) return ;
+                    op=(TradutorAST)match(input,49,FOLLOW_49_in_subDivExit866); if (state.failed) return ;
 
                     }
                     break;
                 case 3 :
-                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:487:30: op= '%'
+                    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:470:30: op= '%'
                     {
-                    op=(TradutorAST)match(input,38,FOLLOW_38_in_subDivExit846); if (state.failed) return ;
+                    op=(TradutorAST)match(input,38,FOLLOW_38_in_subDivExit874); if (state.failed) return ;
 
                     }
                     break;
@@ -1871,16 +1926,16 @@ public class Ref extends TreeFilter {
 
 
     // $ANTLR start "acessoCampo"
-    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:517:1: acessoCampo : ^( '.' a= . b= . ) ;
+    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:500:1: acessoCampo : ^( '.' a= . b= . ) ;
     public final void acessoCampo() throws RecognitionException {
         TradutorAST a=null;
         TradutorAST b=null;
 
         try {
-            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:518:2: ( ^( '.' a= . b= . ) )
-            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:518:4: ^( '.' a= . b= . )
+            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:501:2: ( ^( '.' a= . b= . ) )
+            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:501:4: ^( '.' a= . b= . )
             {
-            match(input,48,FOLLOW_48_in_acessoCampo874); if (state.failed) return ;
+            match(input,48,FOLLOW_48_in_acessoCampo902); if (state.failed) return ;
 
             match(input, Token.DOWN, null); if (state.failed) return ;
             a=(TradutorAST)input.LT(1);
@@ -1986,24 +2041,24 @@ public class Ref extends TreeFilter {
 
 
     // $ANTLR start "vetorExpr"
-    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:594:1: vetorExpr : ^( VECT_EXPR a= . ^( EXPR b= . ) ) ;
+    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:577:1: vetorExpr : ^( VECT_EXPR a= . ^( EXPR b= . ) ) ;
     public final void vetorExpr() throws RecognitionException {
         TradutorAST VECT_EXPR5=null;
         TradutorAST a=null;
         TradutorAST b=null;
 
         try {
-            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:595:2: ( ^( VECT_EXPR a= . ^( EXPR b= . ) ) )
-            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:595:4: ^( VECT_EXPR a= . ^( EXPR b= . ) )
+            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:578:2: ( ^( VECT_EXPR a= . ^( EXPR b= . ) ) )
+            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:578:4: ^( VECT_EXPR a= . ^( EXPR b= . ) )
             {
-            VECT_EXPR5=(TradutorAST)match(input,VECT_EXPR,FOLLOW_VECT_EXPR_in_vetorExpr904); if (state.failed) return ;
+            VECT_EXPR5=(TradutorAST)match(input,VECT_EXPR,FOLLOW_VECT_EXPR_in_vetorExpr932); if (state.failed) return ;
 
             match(input, Token.DOWN, null); if (state.failed) return ;
             a=(TradutorAST)input.LT(1);
 
             matchAny(input); if (state.failed) return ;
 
-            match(input,EXPR,FOLLOW_EXPR_in_vetorExpr913); if (state.failed) return ;
+            match(input,EXPR,FOLLOW_EXPR_in_vetorExpr941); if (state.failed) return ;
 
             match(input, Token.DOWN, null); if (state.failed) return ;
             b=(TradutorAST)input.LT(1);
@@ -2017,6 +2072,8 @@ public class Ref extends TreeFilter {
 
 
             if ( state.backtracking==1 ) {
+            		
+            		if (!(VECT_EXPR5.hasAncestor(VECT_EXPR) || VECT_EXPR5.hasAncestor(METHOD_CALL))){
             		
             			if (toStore != VECT_EXPR5) {
             			
@@ -2041,9 +2098,11 @@ public class Ref extends TreeFilter {
             				
             				Tradutor.buffer.append("iaload\n");
             				
-            				Tradutor.tipoAtual = new SimboloTipoReferencia("int[]");
+            				Tradutor.tipoAtual = new SimboloTipoReferencia("int");
             				
             			}
+            			
+            		}
             		
             		}
 
@@ -2065,7 +2124,7 @@ public class Ref extends TreeFilter {
 
 
     // $ANTLR start "chamadaMetodo"
-    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:628:1: chamadaMetodo : ^( METHOD_CALL a= . ^( LISTA_EXPR (exprs+= . )+ ) ) ;
+    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:615:1: chamadaMetodo : ^( METHOD_CALL a= . ^( LISTA_EXPR (exprs+= . )+ ) ) ;
     public final void chamadaMetodo() throws RecognitionException {
         TradutorAST METHOD_CALL6=null;
         TradutorAST a=null;
@@ -2073,34 +2132,34 @@ public class Ref extends TreeFilter {
         List list_exprs=null;
 
         try {
-            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:629:2: ( ^( METHOD_CALL a= . ^( LISTA_EXPR (exprs+= . )+ ) ) )
-            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:629:4: ^( METHOD_CALL a= . ^( LISTA_EXPR (exprs+= . )+ ) )
+            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:616:2: ( ^( METHOD_CALL a= . ^( LISTA_EXPR (exprs+= . )+ ) ) )
+            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:616:4: ^( METHOD_CALL a= . ^( LISTA_EXPR (exprs+= . )+ ) )
             {
-            METHOD_CALL6=(TradutorAST)match(input,METHOD_CALL,FOLLOW_METHOD_CALL_in_chamadaMetodo938); if (state.failed) return ;
+            METHOD_CALL6=(TradutorAST)match(input,METHOD_CALL,FOLLOW_METHOD_CALL_in_chamadaMetodo966); if (state.failed) return ;
 
             match(input, Token.DOWN, null); if (state.failed) return ;
             a=(TradutorAST)input.LT(1);
 
             matchAny(input); if (state.failed) return ;
 
-            match(input,LISTA_EXPR,FOLLOW_LISTA_EXPR_in_chamadaMetodo947); if (state.failed) return ;
+            match(input,LISTA_EXPR,FOLLOW_LISTA_EXPR_in_chamadaMetodo975); if (state.failed) return ;
 
             match(input, Token.DOWN, null); if (state.failed) return ;
-            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:629:43: (exprs+= . )+
-            int cnt18=0;
-            loop18:
+            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:616:43: (exprs+= . )+
+            int cnt21=0;
+            loop21:
             do {
-                int alt18=2;
-                int LA18_0 = input.LA(1);
+                int alt21=2;
+                int LA21_0 = input.LA(1);
 
-                if ( ((LA18_0 >= BLOCO && LA18_0 <= 74)) ) {
-                    alt18=1;
+                if ( ((LA21_0 >= BLOCO && LA21_0 <= 74)) ) {
+                    alt21=1;
                 }
 
 
-                switch (alt18) {
+                switch (alt21) {
             	case 1 :
-            	    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:629:43: exprs+= .
+            	    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:616:43: exprs+= .
             	    {
             	    exprs=(TradutorAST)input.LT(1);
 
@@ -2113,13 +2172,13 @@ public class Ref extends TreeFilter {
             	    break;
 
             	default :
-            	    if ( cnt18 >= 1 ) break loop18;
+            	    if ( cnt21 >= 1 ) break loop21;
             	    if (state.backtracking>0) {state.failed=true; return ;}
                         EarlyExitException eee =
-                            new EarlyExitException(18, input);
+                            new EarlyExitException(21, input);
                         throw eee;
                 }
-                cnt18++;
+                cnt21++;
             } while (true);
 
 
@@ -2131,57 +2190,137 @@ public class Ref extends TreeFilter {
 
             if ( state.backtracking==1 ) {
             		
-            		SimboloVariavel simboloVariavel;
-            		SimboloMetodo simboloMetodo;
-            		SimboloClasse simboloClasse;
-            		String nomeMetodo;
+            		if (!(METHOD_CALL6.hasAncestor(VECT_EXPR) || METHOD_CALL6.hasAncestor(METHOD_CALL))){
             		
-            		if (a.getText().equals(".")){
-            			nomeMetodo = ((Tree)a.getChildren().get(1)).getText();
-            			if (((Tree)a.getChildren().get(0)).getText().equals(".")){
-            				percorrerSubArvore((TradutorAST)a.getChildren().get(0));
-            				simboloClasse = (SimboloClasse)Tradutor.tipoAtual;
-            			}else {
-            				simboloVariavel = (SimboloVariavel)((TradutorAST)a.getChildren().get(0)).escopo.resolver(((Tree)a.getChildren().get(0)).getText());
-            				loadVar(simboloVariavel);
-            				simboloClasse = (SimboloClasse)tabelaSimbolos.global.resolver(simboloVariavel.getTipo().getNome());
+            			SimboloVariavel simboloVariavel;
+            			SimboloMetodo simboloMetodo;
+            			SimboloClasse simboloClasse = null;
+            			String nomeMetodo;
+            			boolean chamadaEstatica = false;
+            			
+            			if (a.getText().equals(".")){
+            				nomeMetodo = ((Tree)a.getChildren().get(1)).getText();
+            				if (((Tree)a.getChildren().get(0)).getText().equals(".")){
+            					percorrerSubArvore((TradutorAST)a.getChildren().get(0));
+            					simboloClasse = (SimboloClasse)Tradutor.tipoAtual;
+            				}else {
+            					Simbolo s = ((TradutorAST)a.getChildren().get(0)).escopo.resolver(((Tree)a.getChildren().get(0)).getText());
+            					if (s instanceof SimboloVariavel){
+            						simboloVariavel = (SimboloVariavel)s;
+            						loadVar(simboloVariavel);
+            						simboloClasse = (SimboloClasse)tabelaSimbolos.global.resolver(simboloVariavel.getTipo().getNome());
+            					} else if (s instanceof SimboloClasse){
+            						simboloClasse = (SimboloClasse)s;
+            						chamadaEstatica = true;
+            					}
+
+            				}
+            			} else if (METHOD_CALL6.getParent().getText().equals("new")) {
+            				Tradutor.buffer.append("new "+a.getText()+"\n");
+            				simboloClasse = (SimboloClasse)tabelaSimbolos.global.resolver(a.getText());
+            				nomeMetodo = a.getText();
+            			} else {
+            				Tradutor.buffer.append("aload_0\n");
+            				simboloClasse = classeAtual;
+            				nomeMetodo = a.getText();
             			}
-            		} else {
-            			Tradutor.buffer.append("aload_0\n");
-            			simboloClasse = classeAtual;
-            			nomeMetodo = a.getText();
+            			
+            			List<String> tiposParams = new ArrayList<String>();
+            			
+            			for (Object expr : list_exprs){
+            				TradutorAST p = (TradutorAST)((Tree)expr).getChild(0);
+            	            		if (p.escopo != null){
+            	            			SimboloVariavel v = (SimboloVariavel)p.escopo.resolver(p.getText());
+            	            			tiposParams.add(v.getTipo().getNome());
+            	            			loadVar(v);
+            	            		} else if (isInteger(p.getText())){
+            	            			tiposParams.add("int");
+            	            			loadConst(p.getText());
+            	            		} else {
+            	            			percorrerSubArvore((TradutorAST)expr);
+            	                		tiposParams.add(Tradutor.tipoAtual.getNome());
+            	            		}
+            			}
+            			
+            			String assinaturaMetodo = nomeMetodo+"("; 
+            			
+            			List<String> tiposParamsCopia = new ArrayList<String>();
+            			
+            			tiposParamsCopia.addAll(tiposParams);
+            			
+            			if (chamadaEstatica)
+            				assinaturaMetodo += tiposParamsCopia.remove(0);
+            			else
+            				assinaturaMetodo += simboloClasse.getNome();
+            			
+            			for(String tipoParam : tiposParamsCopia)
+            				assinaturaMetodo += ","+tipoParam;
+            			
+            			assinaturaMetodo += ")";
+            			
+            			System.out.println(assinaturaMetodo);
+            			
+            			simboloMetodo = simboloClasse.resolverMetodo(assinaturaMetodo);
+            			
+            			if (simboloMetodo == null){
+            				tiposParamsCopia = new ArrayList<String>();
+            				tiposParamsCopia.addAll(tiposParams);
+            				assinaturaMetodo = nomeMetodo+"(";
+            				assinaturaMetodo += tiposParamsCopia.remove(0);
+            				for(String tipoParam : tiposParamsCopia)
+            					assinaturaMetodo += ","+tiposParamsCopia; 
+            				assinaturaMetodo += ")";
+            				simboloMetodo = simboloClasse.resolverMetodo(assinaturaMetodo);
+            				if (simboloMetodo != null)
+            					chamadaEstatica = true;
+            				
+            			}
+            			
+            			String call = "";
+            			
+            			if (simboloMetodo.isEstatico())
+            				call += "invokestatic ";
+            			else if (simboloMetodo.getNome().equals(simboloClasse))
+            				call += "invokespecial ";
+            			else
+            				call += "invokevirtual ";
+            			
+            			
+            			call += simboloClasse.getNome()+"/";
+            			
+            			if (simboloMetodo.getNome().equals(simboloClasse))
+            				call += "<init>";
+            			else
+            				call += nomeMetodo;
+            				
+            			call += "(";
+            			
+            			for (String tipo : tiposParams){
+            			
+            				if(tipo.equals("int"))
+            					call += "I";
+            				else if (tipo.equals("int[]"))
+            					call += "[I;";
+            				else
+            					call += "L"+tipo+";";
+            			
+            			}
+            			
+            			call += ")";
+            			
+            			if (simboloMetodo.getTipo().getNome().equals("void"))
+            				call += "V";
+            			else if (simboloMetodo.getTipo().getNome().equals("int"))
+            				call += "I";
+            			else if (simboloMetodo.getTipo().getNome().equals("int[]"))
+            				call += "[I;";
+            			else
+            				call += "L"+simboloMetodo.getTipo().getNome()+";";
+            				
+            			Tradutor.buffer.append(call+"\n");
+            			
+            		
             		}
-            		
-            		List<String> tiposParams = new ArrayList<String>();
-            		
-            		for (Object expr : list_exprs){
-            			percorrerSubArvore((TradutorAST)expr);
-            			tiposParams.add(Tradutor.tipoAtual.getNome());
-            		}
-            		
-            		String assinaturaMetodo = nomeMetodo+"(";
-            		
-            		for(String tipoParam : tiposParams)
-            			assinaturaMetodo += tipoParam+",";
-            		
-            		assinaturaMetodo += ")";
-            		
-            		System.out.println(assinaturaMetodo);
-            		
-            		String call = "";
-            		
-            		//irá resolver o método por assinatura                
-                            /*SimboloMetodo simboloMetodo = (SimboloMetodo)simboloClasse.resolver(nomeMetodo);
-            		
-            		if (simboloMetodo.isEstatico())
-            			call = "invokestatic ";
-            		else if (METHOD_CALL6.getParent().getText().equals("new"))
-            			call = "invokespecial ";
-            		else
-            			call = "invokevirtual ";
-            		
-            		
-            		//call += Tradutor.tipoReferencia+"/"+nomeMetodo;*/
             	
             	}
 
@@ -2200,13 +2339,210 @@ public class Ref extends TreeFilter {
     }
     // $ANTLR end "chamadaMetodo"
 
+
+
+    // $ANTLR start "chamadaMetodoSemParams"
+    // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:754:1: chamadaMetodoSemParams : ^( METHOD_CALL a= . ) ;
+    public final void chamadaMetodoSemParams() throws RecognitionException {
+        TradutorAST METHOD_CALL7=null;
+        TradutorAST a=null;
+
+        try {
+            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:755:2: ( ^( METHOD_CALL a= . ) )
+            // C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Ref.g:755:4: ^( METHOD_CALL a= . )
+            {
+            METHOD_CALL7=(TradutorAST)match(input,METHOD_CALL,FOLLOW_METHOD_CALL_in_chamadaMetodoSemParams999); if (state.failed) return ;
+
+            match(input, Token.DOWN, null); if (state.failed) return ;
+            a=(TradutorAST)input.LT(1);
+
+            matchAny(input); if (state.failed) return ;
+
+            match(input, Token.UP, null); if (state.failed) return ;
+
+
+            if ( state.backtracking==1 ) {
+            		
+            		if (!(METHOD_CALL7.hasAncestor(VECT_EXPR) || METHOD_CALL7.hasAncestor(METHOD_CALL))){
+            		
+            			SimboloVariavel simboloVariavel;
+            			SimboloMetodo simboloMetodo;
+            			SimboloClasse simboloClasse = null;
+            			String nomeMetodo;
+            			boolean chamadaEstatica = false;
+            			
+            			if (a.getText().equals(".")){
+            				nomeMetodo = ((Tree)a.getChildren().get(1)).getText();
+            				if (((Tree)a.getChildren().get(0)).getText().equals(".")){
+            					percorrerSubArvore((TradutorAST)a.getChildren().get(0));
+            					simboloClasse = (SimboloClasse)Tradutor.tipoAtual;
+            				}else {
+            					Simbolo s = ((TradutorAST)a.getChildren().get(0)).escopo.resolver(((Tree)a.getChildren().get(0)).getText());
+            					if (s instanceof SimboloVariavel){
+            						simboloVariavel = (SimboloVariavel)s;
+            						loadVar(simboloVariavel);
+            						simboloClasse = (SimboloClasse)tabelaSimbolos.global.resolver(simboloVariavel.getTipo().getNome());
+            					} else if (s instanceof SimboloClasse){
+            						simboloClasse = (SimboloClasse)s;
+            						chamadaEstatica = true;
+            					}
+            				}
+            				
+            			} else if (METHOD_CALL7.getParent().getText().equals("new")) {
+            				Tradutor.buffer.append("new "+a.getText()+"\n");
+            				simboloClasse = (SimboloClasse)tabelaSimbolos.global.resolver(a.getText());
+            				nomeMetodo = a.getText();
+            			} else {
+            				Tradutor.buffer.append("aload_0\n");
+            				simboloClasse = classeAtual;
+            				nomeMetodo = a.getText();
+            			}
+            			
+            			String assinaturaMetodo = nomeMetodo+"("; 
+            						
+            			if (!chamadaEstatica)
+            				assinaturaMetodo += simboloClasse.getNome();
+            			
+            			assinaturaMetodo += ")";
+            			
+            			System.out.println(assinaturaMetodo);
+            			
+            			simboloMetodo = simboloClasse.resolverMetodo(assinaturaMetodo);
+            			
+            			if (simboloMetodo == null){
+            				assinaturaMetodo = nomeMetodo+"()";
+            				simboloMetodo = simboloClasse.resolverMetodo(assinaturaMetodo);
+            				if (simboloMetodo != null)
+            					chamadaEstatica = true;			
+            			}
+            			
+            			String call = "";
+            			
+            			if (simboloMetodo.isEstatico())
+            				call += "invokestatic ";
+            			else if (simboloMetodo.getNome().equals(simboloClasse))
+            				call += "invokespecial ";
+            			else
+            				call += "invokevirtual ";
+            			
+            			
+            			call += simboloClasse.getNome()+"/";
+            			
+            			if (simboloMetodo.getNome().equals(simboloClasse))
+            				call += "<init>";
+            			else
+            				call += nomeMetodo;
+            				
+            			call += "()";		
+            			
+            			if (simboloMetodo.getTipo().getNome().equals("void"))
+            				call += "V";
+            			else if (simboloMetodo.getTipo().getNome().equals("int"))
+            				call += "I";
+            			else if (simboloMetodo.getTipo().getNome().equals("int[]"))
+            				call += "[I;";
+            			else
+            				call += "L"+simboloMetodo.getTipo().getNome()+";";
+            				
+            			Tradutor.buffer.append(call+"\n");
+            			
+            		
+            		}
+            	
+            		}
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+
+        finally {
+        	// do for sure before leaving
+        }
+        return ;
+    }
+    // $ANTLR end "chamadaMetodoSemParams"
+
     // Delegated rules
 
 
+    protected DFA2 dfa2 = new DFA2(this);
     protected DFA5 dfa5 = new DFA5(this);
     protected DFA6 dfa6 = new DFA6(this);
-    protected DFA8 dfa8 = new DFA8(this);
-    protected DFA11 dfa11 = new DFA11(this);
+    protected DFA14 dfa14 = new DFA14(this);
+    static final String DFA2_eotS =
+        "\23\uffff";
+    static final String DFA2_eofS =
+        "\23\uffff";
+    static final String DFA2_minS =
+        "\1\5\12\uffff\1\2\1\4\1\2\1\4\2\uffff\2\3";
+    static final String DFA2_maxS =
+        "\1\65\12\uffff\1\2\1\112\1\23\1\112\2\uffff\1\112\1\23";
+    static final String DFA2_acceptS =
+        "\1\uffff\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\4\uffff\1\13"+
+        "\1\14\2\uffff";
+    static final String DFA2_specialS =
+        "\23\uffff}>";
+    static final String[] DFA2_transitionS = {
+            "\1\1\1\uffff\1\3\14\uffff\1\5\1\13\1\2\2\uffff\1\4\10\uffff"+
+            "\1\12\3\uffff\1\10\3\uffff\2\7\2\uffff\1\10\1\uffff\1\11\1\10"+
+            "\3\uffff\1\6",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "\1\14",
+            "\107\15",
+            "\1\16\1\20\17\uffff\1\17",
+            "\107\21",
+            "",
+            "",
+            "\1\22\107\21",
+            "\1\20\17\uffff\1\17"
+    };
+
+    static final short[] DFA2_eot = DFA.unpackEncodedString(DFA2_eotS);
+    static final short[] DFA2_eof = DFA.unpackEncodedString(DFA2_eofS);
+    static final char[] DFA2_min = DFA.unpackEncodedStringToUnsignedChars(DFA2_minS);
+    static final char[] DFA2_max = DFA.unpackEncodedStringToUnsignedChars(DFA2_maxS);
+    static final short[] DFA2_accept = DFA.unpackEncodedString(DFA2_acceptS);
+    static final short[] DFA2_special = DFA.unpackEncodedString(DFA2_specialS);
+    static final short[][] DFA2_transition;
+
+    static {
+        int numStates = DFA2_transitionS.length;
+        DFA2_transition = new short[numStates][];
+        for (int i=0; i<numStates; i++) {
+            DFA2_transition[i] = DFA.unpackEncodedString(DFA2_transitionS[i]);
+        }
+    }
+
+    class DFA2 extends DFA {
+
+        public DFA2(BaseRecognizer recognizer) {
+            this.recognizer = recognizer;
+            this.decisionNumber = 2;
+            this.eot = DFA2_eot;
+            this.eof = DFA2_eof;
+            this.min = DFA2_min;
+            this.max = DFA2_max;
+            this.accept = DFA2_accept;
+            this.special = DFA2_special;
+            this.transition = DFA2_transition;
+        }
+        public String getDescription() {
+            return "137:1: bottomup : ( exitClass | exitMethod | exitConstructor | exitParams | listaVarDeclAtribuicao | atribuicao | addMult | subDivExit | acessoCampo | vetorExpr | chamadaMetodo | chamadaMetodoSemParams );";
+        }
+    }
     static final String DFA5_eotS =
         "\11\uffff";
     static final String DFA5_eofS =
@@ -2261,29 +2597,33 @@ public class Ref extends TreeFilter {
             this.transition = DFA5_transition;
         }
         public String getDescription() {
-            return "183:25: (st= . )?";
+            return "185:25: (st= . )?";
         }
     }
     static final String DFA6_eotS =
-        "\7\uffff";
+        "\13\uffff";
     static final String DFA6_eofS =
-        "\7\uffff";
+        "\13\uffff";
     static final String DFA6_minS =
-        "\1\4\1\2\1\uffff\1\3\1\2\1\uffff\1\3";
+        "\1\4\2\2\1\uffff\1\4\1\3\2\2\2\uffff\1\3";
     static final String DFA6_maxS =
-        "\2\112\1\uffff\2\112\1\uffff\1\112";
+        "\1\112\2\31\1\uffff\4\112\2\uffff\1\31";
     static final String DFA6_acceptS =
-        "\2\uffff\1\1\2\uffff\1\2\1\uffff";
+        "\3\uffff\1\1\4\uffff\1\2\1\1\1\uffff";
     static final String DFA6_specialS =
-        "\7\uffff}>";
+        "\13\uffff}>";
     static final String[] DFA6_transitionS = {
-            "\1\1\106\2",
-            "\1\3\1\uffff\107\2",
+            "\1\2\24\3\1\1\61\3",
+            "\1\4\1\uffff\1\3\24\uffff\1\3",
+            "\1\5\1\uffff\1\3\24\uffff\1\3",
             "",
-            "\1\5\107\4",
-            "\1\5\1\6\107\4",
+            "\107\6",
+            "\1\10\107\7",
+            "\1\10\1\11\107\6",
+            "\1\10\1\12\107\7",
             "",
-            "\1\5\107\2"
+            "",
+            "\1\10\1\11\24\uffff\1\11"
     };
 
     static final short[] DFA6_eot = DFA.unpackEncodedString(DFA6_eotS);
@@ -2316,77 +2656,22 @@ public class Ref extends TreeFilter {
             this.transition = DFA6_transition;
         }
         public String getDescription() {
-            return "()* loopback of 183:45: (parm= . )*";
+            return "185:44: (vet= . )?";
         }
     }
-    static final String DFA8_eotS =
-        "\7\uffff";
-    static final String DFA8_eofS =
-        "\7\uffff";
-    static final String DFA8_minS =
-        "\1\4\1\2\1\uffff\1\3\1\2\1\uffff\1\3";
-    static final String DFA8_maxS =
-        "\2\112\1\uffff\2\112\1\uffff\1\112";
-    static final String DFA8_acceptS =
-        "\2\uffff\1\1\2\uffff\1\2\1\uffff";
-    static final String DFA8_specialS =
-        "\7\uffff}>";
-    static final String[] DFA8_transitionS = {
-            "\1\1\106\2",
-            "\1\3\1\uffff\107\2",
-            "",
-            "\1\5\107\4",
-            "\1\5\1\6\107\4",
-            "",
-            "\1\5\107\2"
-    };
-
-    static final short[] DFA8_eot = DFA.unpackEncodedString(DFA8_eotS);
-    static final short[] DFA8_eof = DFA.unpackEncodedString(DFA8_eofS);
-    static final char[] DFA8_min = DFA.unpackEncodedStringToUnsignedChars(DFA8_minS);
-    static final char[] DFA8_max = DFA.unpackEncodedStringToUnsignedChars(DFA8_maxS);
-    static final short[] DFA8_accept = DFA.unpackEncodedString(DFA8_acceptS);
-    static final short[] DFA8_special = DFA.unpackEncodedString(DFA8_specialS);
-    static final short[][] DFA8_transition;
-
-    static {
-        int numStates = DFA8_transitionS.length;
-        DFA8_transition = new short[numStates][];
-        for (int i=0; i<numStates; i++) {
-            DFA8_transition[i] = DFA.unpackEncodedString(DFA8_transitionS[i]);
-        }
-    }
-
-    class DFA8 extends DFA {
-
-        public DFA8(BaseRecognizer recognizer) {
-            this.recognizer = recognizer;
-            this.decisionNumber = 8;
-            this.eot = DFA8_eot;
-            this.eof = DFA8_eof;
-            this.min = DFA8_min;
-            this.max = DFA8_max;
-            this.accept = DFA8_accept;
-            this.special = DFA8_special;
-            this.transition = DFA8_transition;
-        }
-        public String getDescription() {
-            return "()* loopback of 227:27: (parm= . )*";
-        }
-    }
-    static final String DFA11_eotS =
+    static final String DFA14_eotS =
         "\11\uffff";
-    static final String DFA11_eofS =
+    static final String DFA14_eofS =
         "\11\uffff";
-    static final String DFA11_minS =
+    static final String DFA14_minS =
         "\1\4\1\2\1\4\1\2\1\uffff\1\3\2\uffff\1\4";
-    static final String DFA11_maxS =
+    static final String DFA14_maxS =
         "\4\112\1\uffff\1\112\2\uffff\1\112";
-    static final String DFA11_acceptS =
+    static final String DFA14_acceptS =
         "\4\uffff\1\1\1\uffff\1\1\1\2\1\uffff";
-    static final String DFA11_specialS =
+    static final String DFA14_specialS =
         "\11\uffff}>";
-    static final String[] DFA11_transitionS = {
+    static final String[] DFA14_transitionS = {
             "\107\1",
             "\1\2\1\uffff\11\4\1\3\75\4",
             "\107\5",
@@ -2398,37 +2683,37 @@ public class Ref extends TreeFilter {
             "\11\4\1\3\75\4"
     };
 
-    static final short[] DFA11_eot = DFA.unpackEncodedString(DFA11_eotS);
-    static final short[] DFA11_eof = DFA.unpackEncodedString(DFA11_eofS);
-    static final char[] DFA11_min = DFA.unpackEncodedStringToUnsignedChars(DFA11_minS);
-    static final char[] DFA11_max = DFA.unpackEncodedStringToUnsignedChars(DFA11_maxS);
-    static final short[] DFA11_accept = DFA.unpackEncodedString(DFA11_acceptS);
-    static final short[] DFA11_special = DFA.unpackEncodedString(DFA11_specialS);
-    static final short[][] DFA11_transition;
+    static final short[] DFA14_eot = DFA.unpackEncodedString(DFA14_eotS);
+    static final short[] DFA14_eof = DFA.unpackEncodedString(DFA14_eofS);
+    static final char[] DFA14_min = DFA.unpackEncodedStringToUnsignedChars(DFA14_minS);
+    static final char[] DFA14_max = DFA.unpackEncodedStringToUnsignedChars(DFA14_maxS);
+    static final short[] DFA14_accept = DFA.unpackEncodedString(DFA14_acceptS);
+    static final short[] DFA14_special = DFA.unpackEncodedString(DFA14_specialS);
+    static final short[][] DFA14_transition;
 
     static {
-        int numStates = DFA11_transitionS.length;
-        DFA11_transition = new short[numStates][];
+        int numStates = DFA14_transitionS.length;
+        DFA14_transition = new short[numStates][];
         for (int i=0; i<numStates; i++) {
-            DFA11_transition[i] = DFA.unpackEncodedString(DFA11_transitionS[i]);
+            DFA14_transition[i] = DFA.unpackEncodedString(DFA14_transitionS[i]);
         }
     }
 
-    class DFA11 extends DFA {
+    class DFA14 extends DFA {
 
-        public DFA11(BaseRecognizer recognizer) {
+        public DFA14(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
-            this.decisionNumber = 11;
-            this.eot = DFA11_eot;
-            this.eof = DFA11_eof;
-            this.min = DFA11_min;
-            this.max = DFA11_max;
-            this.accept = DFA11_accept;
-            this.special = DFA11_special;
-            this.transition = DFA11_transition;
+            this.decisionNumber = 14;
+            this.eot = DFA14_eot;
+            this.eof = DFA14_eof;
+            this.min = DFA14_min;
+            this.max = DFA14_max;
+            this.accept = DFA14_accept;
+            this.special = DFA14_special;
+            this.transition = DFA14_transition;
         }
         public String getDescription() {
-            return "328:25: (st= . )?";
+            return "336:25: (st= . )?";
         }
     }
  
@@ -2450,41 +2735,45 @@ public class Ref extends TreeFilter {
     public static final BitSet FOLLOW_acessoCampo_in_bottomup209 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_vetorExpr_in_bottomup219 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_chamadaMetodo_in_bottomup229 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_CLASSE_in_enterClass249 = new BitSet(new long[]{0x0000000000000004L});
-    public static final BitSet FOLLOW_ID_in_enterClass255 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF0L,0x00000000000007FFL});
-    public static final BitSet FOLLOW_EXTENDS_in_enterClass259 = new BitSet(new long[]{0x0000000000000004L});
-    public static final BitSet FOLLOW_ID_in_enterClass265 = new BitSet(new long[]{0x0000000000000008L});
-    public static final BitSet FOLLOW_CLASSE_in_exitClass301 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_METHOD_DECL_in_enterMethod334 = new BitSet(new long[]{0x0000000000000004L});
-    public static final BitSet FOLLOW_ID_in_enterMethod349 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF0L,0x00000000000007FFL});
-    public static final BitSet FOLLOW_BLOCO_in_enterMethod359 = new BitSet(new long[]{0x0000000000000004L});
-    public static final BitSet FOLLOW_CONSTR_DECL_in_enterConstructor395 = new BitSet(new long[]{0x0000000000000004L});
-    public static final BitSet FOLLOW_ID_in_enterConstructor397 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF0L,0x00000000000007FFL});
-    public static final BitSet FOLLOW_BLOCO_in_enterConstructor407 = new BitSet(new long[]{0x0000000000000004L});
-    public static final BitSet FOLLOW_METHOD_DECL_in_exitMethod446 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_CONSTR_DECL_in_exitConstructor475 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_PARAM_in_enterParam509 = new BitSet(new long[]{0x0000000000000004L});
-    public static final BitSet FOLLOW_ID_in_enterParam517 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF8L,0x00000000000007FFL});
-    public static final BitSet FOLLOW_PARAMS_in_exitParams554 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_FIELD_DECL_in_enterField575 = new BitSet(new long[]{0x0000000000000004L});
-    public static final BitSet FOLLOW_ID_in_enterField590 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF8L,0x00000000000007FFL});
-    public static final BitSet FOLLOW_LISTA_VAR_DECL_in_listaVarDeclAtribuicao634 = new BitSet(new long[]{0x0000000000000004L});
-    public static final BitSet FOLLOW_VAR_DECL_in_listaVarDeclAtribuicao637 = new BitSet(new long[]{0x0000000000000004L});
-    public static final BitSet FOLLOW_ID_in_listaVarDeclAtribuicao645 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF0L,0x00000000000007FFL});
-    public static final BitSet FOLLOW_EXPR_in_listaVarDeclAtribuicao654 = new BitSet(new long[]{0x0000000000000004L});
-    public static final BitSet FOLLOW_53_in_atribuicao698 = new BitSet(new long[]{0x0000000000000004L});
-    public static final BitSet FOLLOW_43_in_addMult738 = new BitSet(new long[]{0x0000000000000004L});
-    public static final BitSet FOLLOW_42_in_addMult746 = new BitSet(new long[]{0x0000000000000004L});
-    public static final BitSet FOLLOW_46_in_subDivEnter782 = new BitSet(new long[]{0x0000000000000004L});
-    public static final BitSet FOLLOW_49_in_subDivEnter790 = new BitSet(new long[]{0x0000000000000004L});
-    public static final BitSet FOLLOW_38_in_subDivEnter798 = new BitSet(new long[]{0x0000000000000004L});
-    public static final BitSet FOLLOW_46_in_subDivExit830 = new BitSet(new long[]{0x0000000000000004L});
-    public static final BitSet FOLLOW_49_in_subDivExit838 = new BitSet(new long[]{0x0000000000000004L});
-    public static final BitSet FOLLOW_38_in_subDivExit846 = new BitSet(new long[]{0x0000000000000004L});
-    public static final BitSet FOLLOW_48_in_acessoCampo874 = new BitSet(new long[]{0x0000000000000004L});
-    public static final BitSet FOLLOW_VECT_EXPR_in_vetorExpr904 = new BitSet(new long[]{0x0000000000000004L});
-    public static final BitSet FOLLOW_EXPR_in_vetorExpr913 = new BitSet(new long[]{0x0000000000000004L});
-    public static final BitSet FOLLOW_METHOD_CALL_in_chamadaMetodo938 = new BitSet(new long[]{0x0000000000000004L});
-    public static final BitSet FOLLOW_LISTA_EXPR_in_chamadaMetodo947 = new BitSet(new long[]{0x0000000000000004L});
+    public static final BitSet FOLLOW_chamadaMetodoSemParams_in_bottomup239 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_CLASSE_in_enterClass259 = new BitSet(new long[]{0x0000000000000004L});
+    public static final BitSet FOLLOW_ID_in_enterClass265 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF0L,0x00000000000007FFL});
+    public static final BitSet FOLLOW_EXTENDS_in_enterClass269 = new BitSet(new long[]{0x0000000000000004L});
+    public static final BitSet FOLLOW_ID_in_enterClass275 = new BitSet(new long[]{0x0000000000000008L});
+    public static final BitSet FOLLOW_CLASSE_in_exitClass311 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_METHOD_DECL_in_enterMethod344 = new BitSet(new long[]{0x0000000000000004L});
+    public static final BitSet FOLLOW_ID_in_enterMethod359 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF0L,0x00000000000007FFL});
+    public static final BitSet FOLLOW_PARAMS_in_enterMethod374 = new BitSet(new long[]{0x0000000000000004L});
+    public static final BitSet FOLLOW_BLOCO_in_enterMethod383 = new BitSet(new long[]{0x0000000000000004L});
+    public static final BitSet FOLLOW_CONSTR_DECL_in_enterConstructor419 = new BitSet(new long[]{0x0000000000000004L});
+    public static final BitSet FOLLOW_ID_in_enterConstructor421 = new BitSet(new long[]{0x0000000002000010L});
+    public static final BitSet FOLLOW_PARAMS_in_enterConstructor429 = new BitSet(new long[]{0x0000000000000004L});
+    public static final BitSet FOLLOW_BLOCO_in_enterConstructor438 = new BitSet(new long[]{0x0000000000000004L});
+    public static final BitSet FOLLOW_METHOD_DECL_in_exitMethod477 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_CONSTR_DECL_in_exitConstructor506 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_PARAM_in_enterParam540 = new BitSet(new long[]{0x0000000000000004L});
+    public static final BitSet FOLLOW_ID_in_enterParam548 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF8L,0x00000000000007FFL});
+    public static final BitSet FOLLOW_PARAMS_in_exitParams585 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_FIELD_DECL_in_enterField606 = new BitSet(new long[]{0x0000000000000004L});
+    public static final BitSet FOLLOW_ID_in_enterField621 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF8L,0x00000000000007FFL});
+    public static final BitSet FOLLOW_LISTA_VAR_DECL_in_listaVarDeclAtribuicao665 = new BitSet(new long[]{0x0000000000000004L});
+    public static final BitSet FOLLOW_VAR_DECL_in_listaVarDeclAtribuicao668 = new BitSet(new long[]{0x0000000000000004L});
+    public static final BitSet FOLLOW_ID_in_listaVarDeclAtribuicao676 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF0L,0x00000000000007FFL});
+    public static final BitSet FOLLOW_EXPR_in_listaVarDeclAtribuicao685 = new BitSet(new long[]{0x0000000000000004L});
+    public static final BitSet FOLLOW_53_in_atribuicao726 = new BitSet(new long[]{0x0000000000000004L});
+    public static final BitSet FOLLOW_43_in_addMult766 = new BitSet(new long[]{0x0000000000000004L});
+    public static final BitSet FOLLOW_42_in_addMult774 = new BitSet(new long[]{0x0000000000000004L});
+    public static final BitSet FOLLOW_46_in_subDivEnter810 = new BitSet(new long[]{0x0000000000000004L});
+    public static final BitSet FOLLOW_49_in_subDivEnter818 = new BitSet(new long[]{0x0000000000000004L});
+    public static final BitSet FOLLOW_38_in_subDivEnter826 = new BitSet(new long[]{0x0000000000000004L});
+    public static final BitSet FOLLOW_46_in_subDivExit858 = new BitSet(new long[]{0x0000000000000004L});
+    public static final BitSet FOLLOW_49_in_subDivExit866 = new BitSet(new long[]{0x0000000000000004L});
+    public static final BitSet FOLLOW_38_in_subDivExit874 = new BitSet(new long[]{0x0000000000000004L});
+    public static final BitSet FOLLOW_48_in_acessoCampo902 = new BitSet(new long[]{0x0000000000000004L});
+    public static final BitSet FOLLOW_VECT_EXPR_in_vetorExpr932 = new BitSet(new long[]{0x0000000000000004L});
+    public static final BitSet FOLLOW_EXPR_in_vetorExpr941 = new BitSet(new long[]{0x0000000000000004L});
+    public static final BitSet FOLLOW_METHOD_CALL_in_chamadaMetodo966 = new BitSet(new long[]{0x0000000000000004L});
+    public static final BitSet FOLLOW_LISTA_EXPR_in_chamadaMetodo975 = new BitSet(new long[]{0x0000000000000004L});
+    public static final BitSet FOLLOW_METHOD_CALL_in_chamadaMetodoSemParams999 = new BitSet(new long[]{0x0000000000000004L});
 
 }

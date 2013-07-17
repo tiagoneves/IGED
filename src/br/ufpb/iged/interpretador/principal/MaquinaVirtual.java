@@ -1341,11 +1341,12 @@ public class MaquinaVirtual {
 			heap.add(objeto);
 
 			frameAtual.pilhaOperandos[++frameAtual.sp] = new Referencia(heap.indexOf(objeto), objeto.getNome());
-			
+					
 			novoObjeto = true;
 			
 			frameAtual.getPilhaIdentificadores().push("");
 			
+						
 		}
 
 		;

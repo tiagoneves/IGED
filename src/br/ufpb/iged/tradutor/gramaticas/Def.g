@@ -17,6 +17,7 @@ options {
     import br.ufpb.iged.tradutor.simbolos.SimboloTipoReferencia;
     import br.ufpb.iged.tradutor.simbolos.SimboloVariavel;
     import br.ufpb.iged.tradutor.simbolos.TabelaSimbolos;
+    import br.ufpb.iged.tradutor.simbolos.Tipo;
     import br.ufpb.iged.tradutor.simbolos.TradutorAST;
     
 }
@@ -91,12 +92,20 @@ exitClass
     ;
 
 enterMethod
-    :  ^(METHOD_DECL st = .? tp = . ID (^(PARAMS .+))* ^(BLOCO .*))
+    :  ^(METHOD_DECL st = .? tp = . ID vet = .? (^(PARAMS .+))* ^(BLOCO .*))
         {
 	        System.out.println("line "+$ID.getLine()+": def method "+$ID.text);
 	        $tp.escopo = escopoAtual;
 	        boolean estatico = $st != null;
-	        SimboloMetodo simboloMetodo = new SimboloMetodo($ID.text,null,escopoAtual, estatico);
+	        String nomeTipo = tp.getText();
+	        if ($vet != null && $vet.getText().equals("[]"))
+	        	nomeTipo += "[]"; 
+	        Tipo t;
+	        if (nomeTipo.equals("int") || nomeTipo.equals("void"))
+	        	t = new SimboloTipoPrimitivo(nomeTipo);
+	        else
+	        	t = new SimboloTipoReferencia(nomeTipo);
+	        SimboloMetodo simboloMetodo = new SimboloMetodo($ID.text,t,escopoAtual, estatico);
 	        simboloMetodo.def = $ID;            
 	        $ID.simbolo = simboloMetodo;         
 	        escopoAtual.definir(simboloMetodo); 
@@ -120,7 +129,7 @@ enterConstructor
 	:  ^(CONSTR_DECL ID (^(PARAMS .+))* ^(BLOCO .*))
 	 {
 	        System.out.println("line "+$ID.getLine()+": def method "+$ID.text);
-	        SimboloMetodo simboloMetodo = new SimboloMetodo($ID.text,null,escopoAtual, false);
+	        SimboloMetodo simboloMetodo = new SimboloMetodo($ID.text,new SimboloTipoPrimitivo("void"),escopoAtual, false);
 	        simboloMetodo.def = $ID;           
 	        $ID.simbolo = simboloMetodo;         
 	        escopoAtual.definir(simboloMetodo); 
@@ -183,7 +192,7 @@ fieldDecl
 	        
 	        simboloVariavel.def = $ID;            
 	        $ID.simbolo = simboloVariavel;         
-	        ((SimboloClasse)escopoAtual).definirCampo(simboloVariavel);
+	        escopoAtual.definir(simboloVariavel);
         }
     ;
     

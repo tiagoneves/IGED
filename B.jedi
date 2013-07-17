@@ -4,7 +4,7 @@ class B{
 	int y;	
 	int z;
 	C w;
-	int v[];
+	int[] v;
 	
 	static int s;
 	
@@ -13,5 +13,12 @@ class B{
 		int a = 2 + 3;
 	
 	}
+	
+	void nakasja(int i, int j){
+	
+		int k = 3;
+	
+	}
+	
 
 }

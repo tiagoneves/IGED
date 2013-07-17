@@ -1,7 +1,9 @@
 package br.ufpb.iged.tradutor.simbolos;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public class SimboloMetodo extends SimboloComEscopo {
@@ -43,6 +45,32 @@ public class SimboloMetodo extends SimboloComEscopo {
 	public void incrementarQuantidadeVariaveis() {
 		
 		this.quantidadeVariaveis++;
+		
+	}
+	
+	public String obterAssinatura(){
+		
+		String assinatura = nome+"(";
+		
+		List<String> args = new ArrayList<String>();
+		
+		args.addAll(argsOrdenados.keySet());
+		
+		String fArg = args.remove(0);
+		
+		SimboloVariavel var = (SimboloVariavel)argsOrdenados.get(fArg);
+		
+		assinatura += var.getTipo().getNome();
+		
+		for (String arg : args){
+			
+			var = (SimboloVariavel)argsOrdenados.get(arg);
+			
+			assinatura += ","+var.getTipo().getNome();
+			
+		}
+		
+		return assinatura+")";
 		
 	}
     
