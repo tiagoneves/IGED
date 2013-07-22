@@ -38,6 +38,8 @@ options {
     SimboloMetodo metodoAtual;
     Tree toStore;
     boolean tipoRetornoVet = false;
+    String nomeClasseAttrCampo;
+    boolean estaticoAttrCampo = false;
     
     public Ref(CommonTreeNodeStream input, TabelaSimbolos tabelaSimbolos) {
         this(input);
@@ -132,6 +134,10 @@ topdown
     |   enterParam
     |   enterField
     |   subDivEnter
+    |   enterAtribuicao
+    |   enterAttrVetor
+    //|   enterNewObject
+    |   enterNewObjectListaVarDeclAtribuicao
     ;
 
 bottomup
@@ -140,13 +146,14 @@ bottomup
     |   exitConstructor
     |   exitParams
     |   listaVarDeclAtribuicao
-    |   atribuicao
+    |   exitAtribuicao
     |   addMult
-    |   subDivExit
+    //|   subDivExit
     |   acessoCampo
     |   vetorExpr
     |   chamadaMetodo
     |   chamadaMetodoSemParams
+    |   exitAttrVetor
     ;
 
 enterClass
@@ -359,46 +366,93 @@ listaVarDeclAtribuicao
     :   ^(LISTA_VAR_DECL ^(VAR_DECL tp = . ID vet =.? ^(EXPR a = .)) .*)
         {
         
-        	SimboloVariavel simboloVariavel;
-        	
-        	if ($a.escopo != null){
-        	
-        		simboloVariavel = (SimboloVariavel)$a.escopo.resolver($a.getText());
-        		
-        		loadVar(simboloVariavel);
-        	
-        	} else if (isInteger($a.getText()))
-        	
-        		loadConst($a.getText());
-        		
-        	
-        	simboloVariavel = (SimboloVariavel) $ID.simbolo;
-        	
-	        storeVar(simboloVariavel);
+        	if (!$ID.visited){
+        
+	        	SimboloVariavel simboloVariavel;
+	        	
+	        	if ($a.escopo != null){
+	        	
+	        		simboloVariavel = (SimboloVariavel)$a.escopo.resolver($a.getText());
+	        		
+	        		loadVar(simboloVariavel);
+	        	
+	        	} else if (isInteger($a.getText()))
+	        	
+	        		loadConst($a.getText());
+	        		
+	        	
+	        	simboloVariavel = (SimboloVariavel) $ID.simbolo;
+	        	
+		        storeVar(simboloVariavel);
+		        
+		        $ID.visited = true;
+	        
+	        }
 	        	        
 	        
         }
     ;
     
-atribuicao
-	:	^('=' a = . b = .)
+exitAtribuicao
+	:	^(at = '=' a = . b = .)
 	{
 	
-		if (!($a.hasAncestor(VECT_EXPR) || $a.hasAncestor(METHOD_CALL))){
+		if (!($a.hasAncestor(VECT_EXPR) || $a.hasAncestor(METHOD_CALL)) && !$at.visited){
 		
-			SimboloVariavel simboloVariavel;
+			if ($a.getText().equals(".")){
+		
+				TradutorAST t = (TradutorAST)$a.getChildren().get(1);
 				
-			if ($b.getText().equals("null"))
-				Tradutor.buffer.append("aconst_null\n");
-			else if ($b.escopo != null){			
-				simboloVariavel = (SimboloVariavel) $b.escopo.resolver($b.getText());
-				loadVar(simboloVariavel);
-			} else if (isInteger($b.getText())) 
-				loadConst($b.getText());
+				if (t.escopo != null){
 				
-			if ($a.escopo != null){
-				simboloVariavel = (SimboloVariavel)$a.escopo.resolver($a.getText());
-				storeVar(simboloVariavel);
+					SimboloClasse sc = (SimboloClasse)tabelaSimbolos.global.resolver(nomeClasseAttrCampo);
+				
+					SimboloVariavel simboloVariavel = sc.resolverCampo(t.getText());
+					
+					String instr = "";
+					
+					if (estaticoAttrCampo)
+						instr += "putstatic ";
+					else
+						instr += "putfield ";
+						
+					estaticoAttrCampo = false;
+					
+					instr += nomeClasseAttrCampo+"/" + ((TradutorAST)$a.getChildren().get(1)).getText() + " ";
+					
+					String tipo = simboloVariavel.getTipo().getNome();
+					
+					if (tipo.equals("int"))
+						instr += "I";
+					else if (tipo.equals("int[]"))
+						instr += "[I;";
+					else
+						instr += "L"+tipo+";";
+						
+					Tradutor.buffer.append(instr + "\n");
+					
+				
+				}
+		
+		        } else {
+		
+				SimboloVariavel simboloVariavel;
+					
+				if ($b.getText().equals("null"))
+					Tradutor.buffer.append("aconst_null\n");
+				else if ($b.escopo != null){			
+					simboloVariavel = (SimboloVariavel) $b.escopo.resolver($b.getText());
+					loadVar(simboloVariavel);
+				} else if (isInteger($b.getText())) 
+					loadConst($b.getText());
+					
+				if ($a.escopo != null){
+					simboloVariavel = (SimboloVariavel)$a.escopo.resolver($a.getText());
+					storeVar(simboloVariavel);
+				}
+				
+				$at.visited = true;
+			
 			}
 		
 		}
@@ -410,7 +464,7 @@ addMult
 	:       ^((op = '+' | op = '*') a = . b = .)
 		{
 		
-			if (!($op.hasAncestor(VECT_EXPR) || $op.hasAncestor(METHOD_CALL))){
+			if (!($op.hasAncestor(VECT_EXPR) || $op.hasAncestor(METHOD_CALL)) && !$op.visited){
 			
 				SimboloVariavel simboloVariavel;
 				
@@ -434,6 +488,8 @@ addMult
 					Tradutor.buffer.append("imul\n");
 					
 			       Tradutor.tipoAtual = new SimboloTipoPrimitivo("int");
+			       
+			       $op.visited = true;
 
 				
 			}
@@ -443,10 +499,10 @@ addMult
 	;
 	
 subDivEnter
-	:	^((op = '-' | op = '/' | op = '%') a = . .)
+	:	^((op = '-' | op = '/' | op = '%') a = . b = .)
 		{
 		
-			if (!($op.hasAncestor(VECT_EXPR) || $op.hasAncestor(METHOD_CALL))){
+			if (!($op.hasAncestor(VECT_EXPR) || $op.hasAncestor(METHOD_CALL)) && !$op.visited){
 				
 			        SimboloVariavel simboloVariavel;
 				
@@ -454,23 +510,418 @@ subDivEnter
 					simboloVariavel = (SimboloVariavel) $a.escopo.resolver($a.getText());
 					if (simboloVariavel != null)
 						loadVar(simboloVariavel);
-				} else if (isInteger($a.getText()))
+				} else if (isInteger($a.getText())){
 					loadConst($a.getText());
+				} else {
+					percorrerSubArvore($a);
+					$a.visited = true;
+				}
 					
 			       Tradutor.tipoAtual = new SimboloTipoPrimitivo("int");
+			       
+			       if ($b.escopo != null){
+			
+					simboloVariavel = (SimboloVariavel)$b.escopo.resolver($b.getText());
+					
+					loadVar(simboloVariavel);
+					
+					Tradutor.tipoAtual = simboloVariavel.getTipo();
+				
+				} else if (isInteger($b.getText())){
+					
+					loadConst($b.getText());
+					
+					Tradutor.tipoAtual = new SimboloTipoPrimitivo("int");
+				
+				} else {
+					percorrerSubArvore($b);
+					$b.visited = true;
+				}
+					
+				if (op.getText().equals("-"))
+					Tradutor.buffer.append("isub\n");
+				else if (op.getText().equals("/"))
+					Tradutor.buffer.append("idiv\n");
+				else
+					Tradutor.buffer.append("irem\n");
+					
+				Tradutor.tipoAtual = new SimboloTipoPrimitivo("int");
 
+
+			       $op.visited = true;
 				
 			}
 			
 					
 		}
 	;
+	
+enterAtribuicao
+	:	^(at = '=' a = .  b = . )
+	
+	{
+	
+		SimboloVariavel simboloVariavel;
+		SimboloClasse simboloClasse;
+	
+		if ($b.getText().equals("new")){
+		
+			TradutorAST t = (TradutorAST)$b.getChildren().get(0);
+		
+			if (t.token.getType() == VECT_EXPR){
+			
+				TradutorAST expr = (TradutorAST) t.getChildren().get(1);
+			
+				if ($a.getText().equals(".")){
+				
+					if (((TradutorAST)$a.getChildren().get(0)).getText().equals(".")){
+						percorrerSubArvore((TradutorAST)$a.getChildren().get(0));
+						((TradutorAST)$a.getChildren().get(0)).visited = true;
+						nomeClasseAttrCampo = Tradutor.tipoAtual.getNome();
+					} else if (((TradutorAST)$a.getChildren().get(0)).escopo != null){				
+						simboloVariavel = (SimboloVariavel)((TradutorAST)$a.getChildren().get(0)).escopo.resolver(((TradutorAST)$a.getChildren().get(0)).getText());
+						loadVar(simboloVariavel);
+						Tradutor.tipoAtual = simboloVariavel.getTipo();
+						nomeClasseAttrCampo = simboloVariavel.getTipo().getNome();
+					}
+					
+					if (((TradutorAST)expr.getChildren().get(0)).escopo != null){
+						simboloVariavel = (SimboloVariavel) ((TradutorAST)expr.getChildren().get(0)).escopo.resolver(((TradutorAST)expr.getChildren().get(0)).getText());
+						loadVar(simboloVariavel);
+						Tradutor.tipoAtual = simboloVariavel.getTipo();
+					} else if (isInteger(((TradutorAST)expr.getChildren().get(0)).getText())){
+						loadConst(((TradutorAST)expr.getChildren().get(0)).getText());
+						Tradutor.tipoAtual = new SimboloTipoPrimitivo("int");
+					} else {			
+						percorrerSubArvore((TradutorAST)expr.getChildren().get(0));				
+						((TradutorAST)expr.getChildren().get(0)).visited = true;			
+					}
+					
+					Tradutor.buffer.append("newarray int\n");
+					
+					TradutorAST p = (TradutorAST)$a.getChildren().get(1);
+					
+					Tradutor.buffer.append("putfield "+nomeClasseAttrCampo+"/"+p.getText()+" ");
+					
+					simboloClasse = (SimboloClasse)tabelaSimbolos.global.resolver(nomeClasseAttrCampo);
+					
+					simboloVariavel = (SimboloVariavel)simboloClasse.resolverCampo(p.getText());
+					
+					if (simboloVariavel.getTipo().getNome().equals("int"))
+						Tradutor.buffer.append("I\n");
+					else if (simboloVariavel.getTipo().getNome().equals("int[]"))
+						Tradutor.buffer.append("[I;\n");
+					else
+						Tradutor.buffer.append("L"+simboloVariavel.getTipo().getNome()+";\n");
+						
+					Tradutor.tipoAtual = simboloVariavel.getTipo();
+				
+					$a.visited = true;
+				
+				} else if (((TradutorAST)$a).escopo != null){
+				
+					if (((TradutorAST)expr.getChildren().get(0)).escopo != null){
+						simboloVariavel = (SimboloVariavel) ((TradutorAST)expr.getChildren().get(0)).escopo.resolver(((TradutorAST)expr.getChildren().get(0)).getText());
+						loadVar(simboloVariavel);
+						Tradutor.tipoAtual = simboloVariavel.getTipo();
+					} else if (isInteger(((TradutorAST)expr.getChildren().get(0)).getText())){
+						loadConst(((TradutorAST)expr.getChildren().get(0)).getText());
+						Tradutor.tipoAtual = new SimboloTipoPrimitivo("int");
+					} else {			
+						percorrerSubArvore((TradutorAST)expr.getChildren().get(0));				
+						((TradutorAST)expr.getChildren().get(0)).visited = true;			
+					}
+					
+					Tradutor.buffer.append("newarray int\n");
+					
+					simboloVariavel = (SimboloVariavel) ((TradutorAST)$a).escopo.resolver($a.getText());
+					
+					storeVar(simboloVariavel);
+					
+					Tradutor.tipoAtual = simboloVariavel.getTipo();
+				
+				}
+			
+			} else {
+			
+				String nomeNovaClasse;
+			
+				if ($a.getText().equals(".")) {
+				
+					if (((TradutorAST)$a.getChildren().get(0)).getText().equals(".")) {
+					
+						percorrerSubArvore((TradutorAST)$a.getChildren().get(0));
+						
+						((TradutorAST)$a.getChildren().get(0)).visited = true;
+						
+						nomeClasseAttrCampo = Tradutor.tipoAtual.getNome(); 
+						
+					
+					} else if (((TradutorAST)$a.getChildren().get(0)).escopo != null){
+					
+						simboloVariavel = (SimboloVariavel)((TradutorAST)$a.getChildren().get(0)).escopo.resolver(((TradutorAST)$a.getChildren().get(0)).getText());
+						
+						loadVar(simboloVariavel);
+						
+						Tradutor.tipoAtual = simboloVariavel.getTipo();
+						
+						nomeClasseAttrCampo = Tradutor.tipoAtual.getNome();
+					
+					}
+					
+					nomeNovaClasse = ((TradutorAST)t.getChildren().get(0)).getText();
+					
+					Tradutor.buffer.append("new "+nomeNovaClasse+"\n");
+					
+					TradutorAST p = (TradutorAST)$a.getChildren().get(1);
+					
+					Tradutor.buffer.append("putfield "+nomeClasseAttrCampo+"/"+p.getText()+" ");
+					
+					simboloClasse = (SimboloClasse)tabelaSimbolos.global.resolver(nomeClasseAttrCampo);
+					
+					simboloVariavel = (SimboloVariavel)simboloClasse.resolverCampo(p.getText());
+					
+					if (simboloVariavel.getTipo().getNome().equals("int"))
+						Tradutor.buffer.append("I\n");
+					else if (simboloVariavel.getTipo().getNome().equals("int[]"))
+						Tradutor.buffer.append("[I;");
+					else
+						Tradutor.buffer.append("L"+simboloVariavel.getTipo().getNome()+";\n");
+						
+					Tradutor.tipoAtual = simboloVariavel.getTipo();
+					
+					if (((TradutorAST)$a.getChildren().get(0)).getText().equals(".")) {
+					
+						percorrerSubArvore((TradutorAST)$a.getChildren().get(0));
+						
+						((TradutorAST)$a.getChildren().get(0)).visited = true;
+						
+						nomeClasseAttrCampo = Tradutor.tipoAtual.getNome(); 
+						
+					
+					} else if (((TradutorAST)$a.getChildren().get(0)).escopo != null){
+					
+						simboloVariavel = (SimboloVariavel)((TradutorAST)$a.getChildren().get(0)).escopo.resolver(((TradutorAST)$a.getChildren().get(0)).getText());
+						
+						loadVar(simboloVariavel);
+						
+						Tradutor.tipoAtual = simboloVariavel.getTipo();
+						
+						nomeClasseAttrCampo = Tradutor.tipoAtual.getNome();
+					
+					}
+					
+					TradutorAST g = (TradutorAST)$a.getChildren().get(1);
+										
+					Tradutor.buffer.append("getfield "+nomeClasseAttrCampo+"/"+g.getText()+" ");
+					
+					simboloClasse = (SimboloClasse)tabelaSimbolos.global.resolver(nomeClasseAttrCampo);
+					
+					simboloVariavel = (SimboloVariavel)simboloClasse.resolverCampo(g.getText());
+					
+					if (simboloVariavel.getTipo().getNome().equals("int"))
+						Tradutor.buffer.append("I\n");
+					else if (simboloVariavel.getTipo().getNome().equals("int[]"))
+						Tradutor.buffer.append("[I;\n");
+					else
+						Tradutor.buffer.append("L"+simboloVariavel.getTipo().getNome()+";\n");
+						
+					Tradutor.tipoAtual = simboloVariavel.getTipo();
+					
+					$a.visited = true;
+				
+				} else if ($a.escopo != null) {
+				
+					nomeNovaClasse = ((TradutorAST)t.getChildren().get(0)).getText();
+					
+					Tradutor.buffer.append("new "+nomeNovaClasse+"\n");
+					
+					simboloVariavel = (SimboloVariavel) $a.escopo.resolver($a.getText());
+					
+					storeVar(simboloVariavel);
+					
+					loadVar(simboloVariavel);
+					
+					Tradutor.tipoAtual = simboloVariavel.getTipo();
+				
+				}
+			
+			}
+			
+			t.visited = true;
+			
+			$at.visited = true;
+		
+		} else if ($a.getText().equals(".")){
+		
+				TradutorAST t = (TradutorAST)$a.getChildren().get(0);
+				if (t.escopo != null){
+					simboloClasse = (SimboloClasse)tabelaSimbolos.global.resolver(t.getText());
+					if (simboloClasse != null){
+						nomeClasseAttrCampo = simboloClasse.getNome();
+						estaticoAttrCampo = true; 
+					} else {
+						simboloVariavel = (SimboloVariavel)t.escopo.resolver(t.getText());
+						loadVar(simboloVariavel);
+						$a.visited = true;
+						nomeClasseAttrCampo = simboloVariavel.getTipo().getNome();
+					}
+				} else {
+					percorrerSubArvore(t);
+					t.visited = true;
+					nomeClasseAttrCampo = Tradutor.tipoAtual.getNome();
+				}
+				
+				if ($b.escopo != null){
+				
+					simboloVariavel = (SimboloVariavel)$b.escopo.resolver($b.getText());
+					
+					loadVar(simboloVariavel);
+					
+					Tradutor.tipoAtual = simboloVariavel.getTipo();
+				
+				} else if (isInteger($b.getText())){
+					
+					loadConst($b.getText());
+					
+					Tradutor.tipoAtual = new SimboloTipoPrimitivo("int");
+				
+				}
+				
+			  //$at.visited = true;
+		
+			}
+		
+		
+		}
+		
+	;
 
-subDivExit
+enterAttrVetor
+	:	^('=' ^(VECT_EXPR a = . ^(EXPR b = .)) c = .)
+	{
+	
+		CommonTree tree;
+		SimboloVariavel simboloVariavel;
+				
+		if ($a.escopo != null) {
+			simboloVariavel = (SimboloVariavel) $a.escopo.resolver($a.getText());
+			loadVar(simboloVariavel);						
+		} else if ($a.getText().equals(".")){
+			percorrerSubArvore($a);	
+			$a.visited = true;
+		}
+				
+		if ($b.escopo != null) {
+			simboloVariavel = (SimboloVariavel) $b.escopo.resolver($b.getText());
+			loadVar(simboloVariavel);	
+		} else if (isInteger($b.getText()))
+			loadConst($b.getText());
+		else{				
+			percorrerSubArvore($b);
+			$b.visited = true;
+		}
+		
+		if ($c.escopo != null){
+			
+			simboloVariavel = (SimboloVariavel)$c.escopo.resolver($c.getText());
+				
+			loadVar(simboloVariavel);
+				
+			Tradutor.tipoAtual = simboloVariavel.getTipo();
+			
+		} else if (isInteger($c.getText())){
+				
+			loadConst($c.getText());
+				
+			Tradutor.tipoAtual = new SimboloTipoPrimitivo("int");
+			
+		}
+		
+		$a.visited = true;
+		
+		
+		
+	}
+	;
+	
+/*enterNewObject
+	:	^('=' a = . b = .)
+	{
+		
+	}
+	;*/
+	
+enterNewObjectListaVarDeclAtribuicao
+	:	^(LISTA_VAR_DECL ^(VAR_DECL tp = . ID vet =.? ^(EXPR a = .)) .*)
+	{
+		if (!$ID.visited && $a.getText().equals("new")){
+		
+			SimboloVariavel simboloVariavel;
+		
+			TradutorAST t = (TradutorAST)$a.getChildren().get(0);
+					
+			if (t.token.getType() == VECT_EXPR){
+			
+				TradutorAST expr = (TradutorAST)t.getChildren().get(1);
+				
+				if (((TradutorAST)expr.getChildren().get(0)).escopo != null){
+					simboloVariavel = (SimboloVariavel) ((TradutorAST)expr.getChildren().get(0)).escopo.resolver(((TradutorAST)expr.getChildren().get(0)).getText());
+					loadVar(simboloVariavel);
+					Tradutor.tipoAtual = simboloVariavel.getTipo();
+				} else if (isInteger(((TradutorAST)expr.getChildren().get(0)).getText())){
+					loadConst(((TradutorAST)expr.getChildren().get(0)).getText());
+					Tradutor.tipoAtual = new SimboloTipoPrimitivo("int");
+				} else {			
+					percorrerSubArvore((TradutorAST)expr.getChildren().get(0));				
+					((TradutorAST)expr.getChildren().get(0)).visited = true;			
+				}
+					
+				Tradutor.buffer.append("newarray int\n");
+					
+				simboloVariavel = (SimboloVariavel) $ID.escopo.resolver($ID.getText());
+					
+				storeVar(simboloVariavel);
+				
+				Tradutor.tipoAtual = simboloVariavel.getTipo();
+				
+			} else {
+			
+				Tradutor.buffer.append("new "+$tp.getText()+"\n");
+			
+				simboloVariavel = (SimboloVariavel)$ID.escopo.resolver($ID.text);
+			
+				storeVar(simboloVariavel);
+				
+				loadVar(simboloVariavel);
+				
+				Tradutor.tipoAtual = simboloVariavel.getTipo();
+					
+			}
+			
+			$ID.visited = true;
+			
+			t.visited = true;
+				
+		
+		}
+	}
+	;
+	
+exitAttrVetor
+	:	^('=' ^(VECT_EXPR . ^(EXPR .)) .)
+	{
+	
+		Tradutor.buffer.append("iastore\n");
+		
+	}
+	;
+	
+/*subDivExit
 	:	 ^((op = '-' | op = '/' | op = '%') . b = .)
 		{
 		
-			if (!($op.hasAncestor(VECT_EXPR) || $op.hasAncestor(METHOD_CALL))){
+			if (!($op.hasAncestor(VECT_EXPR) || $op.hasAncestor(METHOD_CALL)) && !op.visited){
 		
 				SimboloVariavel simboloVariavel;
 			
@@ -490,68 +941,25 @@ subDivExit
 					
 				Tradutor.tipoAtual = new SimboloTipoPrimitivo("int");
 
+				$op.visited = true;
 				
 			}
 			
 			
 		}
-	;
+	;*/
 	
 acessoCampo 
-	:	^('.' a = . b = . )
+	:	^(p = '.' a = . b = . )
 	{
-	
-		if (!($a.hasAncestor(VECT_EXPR) || $a.hasAncestor(METHOD_CALL))){
-	
-			SimboloClasse simboloClasse;
-			String instrucao = "";
-			
-			if ($a.getText().equals(".")){
-            			simboloClasse = (SimboloClasse)tabelaSimbolos.global.resolver(Tradutor.tipoAtual.getNome());
-				instrucao += "getfield "+simboloClasse.getNome()+"/"+$b.getText();
-				SimboloVariavel simboloVariavel = simboloClasse.resolverCampo($b.getText());
-				if (simboloVariavel.getTipo().getNome().equals("int")){
-					Tradutor.tipoAtual = simboloVariavel.getTipo();
-					instrucao += " I";
-				} else if (simboloVariavel.getTipo().getNome().equals("int[]")){
-					Tradutor.tipoAtual = simboloVariavel.getTipo();
-					instrucao += " [I;";
-				} else {
-					Tradutor.tipoAtual = simboloVariavel.getTipo();
-					instrucao += " L"+simboloVariavel.getTipo().getNome()+";";
-				}
-			} else if ($b.getText().equals(".")){
-            			simboloClasse = (SimboloClasse)tabelaSimbolos.global.resolver(Tradutor.tipoAtual.getNome());
-				instrucao += "getfield "+simboloClasse.getNome()+"/"+$a.getText();
-				SimboloVariavel simboloVariavel = simboloClasse.resolverCampo($a.getText());
-				if (simboloVariavel.getTipo().getNome().equals("int")){
-					Tradutor.tipoAtual = simboloVariavel.getTipo();
-					instrucao += " I";
-				} else if (simboloVariavel.getTipo().getNome().equals("int[]")){
-					Tradutor.tipoAtual = simboloVariavel.getTipo();
-					instrucao += " [I;";
-				} else {
-					Tradutor.tipoAtual = simboloVariavel.getTipo();
-					instrucao += " L"+simboloVariavel.getTipo().getNome()+";";
-				}
-			} else if ($a.escopo != null && $b.escopo != null){
-				simboloClasse = (SimboloClasse)tabelaSimbolos.global.resolver($a.getText());
-				if (simboloClasse != null){
-					instrucao += "getstatic "+simboloClasse.getNome()+"/"+$b.getText();
-					SimboloVariavel simboloVariavel = simboloClasse.resolverCampo($b.getText());
-					if (simboloVariavel.getTipo().getNome().equals("int")){
-						Tradutor.tipoAtual = simboloVariavel.getTipo();
-						instrucao += " I";
-					} else if (simboloVariavel.getTipo().getNome().equals("int[]")){
-						Tradutor.tipoAtual = simboloVariavel.getTipo();
-						instrucao += " [I;";
-					} else {
-						Tradutor.tipoAtual = simboloVariavel.getTipo();
-						instrucao += " L"+simboloVariavel.getTipo().getNome()+";";
-					}
-				} else {
-					loadVar((SimboloVariavel)$a.escopo.resolver($a.getText()));
-					simboloClasse = (SimboloClasse)tabelaSimbolos.global.resolver($a.escopo.resolver($a.getText()).getTipo().getNome());
+		
+			if (!($a.hasAncestor(VECT_EXPR) || $a.hasAncestor(METHOD_CALL)) && !$p.visited){
+		
+				/*SimboloClasse simboloClasse;
+				String instrucao = "";
+				
+				if ($a.getText().equals(".")){
+	            			simboloClasse = (SimboloClasse)tabelaSimbolos.global.resolver(Tradutor.tipoAtual.getNome());
 					instrucao += "getfield "+simboloClasse.getNome()+"/"+$b.getText();
 					SimboloVariavel simboloVariavel = simboloClasse.resolverCampo($b.getText());
 					if (simboloVariavel.getTipo().getNome().equals("int")){
@@ -564,23 +972,127 @@ acessoCampo
 						Tradutor.tipoAtual = simboloVariavel.getTipo();
 						instrucao += " L"+simboloVariavel.getTipo().getNome()+";";
 					}
+				} else if ($b.getText().equals(".")){
+	            			simboloClasse = (SimboloClasse)tabelaSimbolos.global.resolver(Tradutor.tipoAtual.getNome());
+					instrucao += "getfield "+simboloClasse.getNome()+"/"+$a.getText();
+					SimboloVariavel simboloVariavel = simboloClasse.resolverCampo($a.getText());
+					if (simboloVariavel.getTipo().getNome().equals("int")){
+						Tradutor.tipoAtual = simboloVariavel.getTipo();
+						instrucao += " I";
+					} else if (simboloVariavel.getTipo().getNome().equals("int[]")){
+						Tradutor.tipoAtual = simboloVariavel.getTipo();
+						instrucao += " [I;";
+					} else {
+						Tradutor.tipoAtual = simboloVariavel.getTipo();
+						instrucao += " L"+simboloVariavel.getTipo().getNome()+";";
+					}
+				} else if ($a.escopo != null && $b.escopo != null){
+					simboloClasse = (SimboloClasse)tabelaSimbolos.global.resolver($a.getText());
+					if (simboloClasse != null){
+						instrucao += "getstatic "+simboloClasse.getNome()+"/"+$b.getText();
+						SimboloVariavel simboloVariavel = simboloClasse.resolverCampo($b.getText());
+						if (simboloVariavel.getTipo().getNome().equals("int")){
+							Tradutor.tipoAtual = simboloVariavel.getTipo();
+							instrucao += " I";
+						} else if (simboloVariavel.getTipo().getNome().equals("int[]")){
+							Tradutor.tipoAtual = simboloVariavel.getTipo();
+							instrucao += " [I;";
+						} else {
+							Tradutor.tipoAtual = simboloVariavel.getTipo();
+							instrucao += " L"+simboloVariavel.getTipo().getNome()+";";
+						}
+					} else {
+						loadVar((SimboloVariavel)$a.escopo.resolver($a.getText()));
+						simboloClasse = (SimboloClasse)tabelaSimbolos.global.resolver($a.escopo.resolver($a.getText()).getTipo().getNome());
+						instrucao += "getfield "+simboloClasse.getNome()+"/"+$b.getText();
+						SimboloVariavel simboloVariavel = simboloClasse.resolverCampo($b.getText());
+						if (simboloVariavel.getTipo().getNome().equals("int")){
+							Tradutor.tipoAtual = simboloVariavel.getTipo();
+							instrucao += " I";
+						} else if (simboloVariavel.getTipo().getNome().equals("int[]")){
+							Tradutor.tipoAtual = simboloVariavel.getTipo();
+							instrucao += " [I;";
+						} else {
+							Tradutor.tipoAtual = simboloVariavel.getTipo();
+							instrucao += " L"+simboloVariavel.getTipo().getNome()+";";
+						}
+					}*/
+					
+					SimboloVariavel simboloVariavel;
+					SimboloClasse simboloClasse;
+					boolean estatico = false;
+					
+					if ($a.escopo != null){
+					
+						simboloClasse = (SimboloClasse)tabelaSimbolos.global.resolver($a.getText());
+						
+						if (simboloClasse != null){
+						
+							Tradutor.buffer.append("getstatic "+simboloClasse.getNome()+"/"+$b.getText()+" ");
+							
+							simboloVariavel = (SimboloVariavel) simboloClasse.resolverCampo($b.getText());
+							
+							if (simboloVariavel.getTipo().getNome().equals("int"))
+								Tradutor.buffer.append("I\n");
+							else if (simboloVariavel.getTipo().getNome().equals("int[]"))
+								Tradutor.buffer.append("[I;\n");
+							else
+								Tradutor.buffer.append("L"+simboloVariavel.getTipo().getNome()+";\n");
+								
+							Tradutor.tipoAtual = simboloVariavel.getTipo();
+							
+							estatico = true;
+						
+						} else {
+					
+							simboloVariavel = (SimboloVariavel) $a.escopo.resolver($a.getText());
+							
+							loadVar(simboloVariavel);
+							
+							Tradutor.tipoAtual = simboloVariavel.getTipo();
+						
+						}
+					
+					}
+					
+					if ($b.escopo != null && !estatico){
+					
+						simboloClasse = (SimboloClasse) tabelaSimbolos.global.resolver(Tradutor.tipoAtual.getNome());
+						
+						simboloVariavel = (SimboloVariavel)simboloClasse.resolverCampo($b.getText());
+						
+						Tradutor.buffer.append("getfield "+simboloClasse.getNome()+"/"+$b.getText()+" ");
+						
+						if (simboloVariavel.getTipo().getNome().equals("int"))
+							Tradutor.buffer.append("I\n");
+						else if (simboloVariavel.getTipo().getNome().equals("int[]"))
+							Tradutor.buffer.append("[I;\n");
+						else
+							Tradutor.buffer.append("L"+simboloVariavel.getTipo().getNome()+";\n");
+							
+						Tradutor.tipoAtual = simboloVariavel.getTipo();
+					
+					}
+					
+					$p.visited = true;				
+					
 				}
-			}
+				
+				//Tradutor.buffer.append(instrucao+"\n");
+						
 			
-			Tradutor.buffer.append(instrucao+"\n");
+			}
 		
-		}
 	
-	}
 	;
 	
 vetorExpr
 	:	^(VECT_EXPR a = . ^(EXPR b = .))
 		{
 		
-		if (!($VECT_EXPR.hasAncestor(VECT_EXPR) || $VECT_EXPR.hasAncestor(METHOD_CALL))){
+		if (!($VECT_EXPR.hasAncestor(VECT_EXPR) || $VECT_EXPR.hasAncestor(METHOD_CALL)) && !$VECT_EXPR.visited){
 		
-			if (toStore != $VECT_EXPR) {
+			if (!$a.visited) {
 			
 				CommonTree tree;
 				SimboloVariavel simboloVariavel;
@@ -590,6 +1102,7 @@ vetorExpr
 					loadVar(simboloVariavel);						
 				} else if ($a.getText().equals(".")){
 					percorrerSubArvore($a);	
+					$a.visited = true;
 				}
 				
 				if ($b.escopo != null) {
@@ -599,11 +1112,14 @@ vetorExpr
 					loadConst($b.getText());
 				else{				
 				        percorrerSubArvore($b);
+				        $b.visited = true;
 				}
 				
 				Tradutor.buffer.append("iaload\n");
 				
 				Tradutor.tipoAtual = new SimboloTipoReferencia("int");
+				
+				$a.visited = true;
 				
 			}
 			
@@ -616,18 +1132,20 @@ chamadaMetodo
 	:	^(METHOD_CALL a = . ^(LISTA_EXPR exprs += .+))
 	{
 		
-		if (!($METHOD_CALL.hasAncestor(VECT_EXPR) || $METHOD_CALL.hasAncestor(METHOD_CALL))){
+		if (!($METHOD_CALL.hasAncestor(VECT_EXPR) || $METHOD_CALL.hasAncestor(METHOD_CALL)) && !$a.visited){
 		
 			SimboloVariavel simboloVariavel;
 			SimboloMetodo simboloMetodo;
 			SimboloClasse simboloClasse = null;
 			String nomeMetodo;
 			boolean chamadaEstatica = false;
+			boolean metodoClasseAtual = false;
 			
 			if ($a.getText().equals(".")){
 				nomeMetodo = ((Tree)$a.getChildren().get(1)).getText();
 				if (((Tree)$a.getChildren().get(0)).getText().equals(".")){
 					percorrerSubArvore((TradutorAST)$a.getChildren().get(0));
+					((TradutorAST)$a.getChildren().get(0)).visited = true;
 					simboloClasse = (SimboloClasse)Tradutor.tipoAtual;
 				}else {
 					Simbolo s = ((TradutorAST)$a.getChildren().get(0)).escopo.resolver(((Tree)$a.getChildren().get(0)).getText());
@@ -642,11 +1160,10 @@ chamadaMetodo
 
 				}
 			} else if ($METHOD_CALL.getParent().getText().equals("new")) {
-				Tradutor.buffer.append("new "+$a.getText()+"\n");
 				simboloClasse = (SimboloClasse)tabelaSimbolos.global.resolver($a.getText());
 				nomeMetodo = $a.getText();
 			} else {
-				Tradutor.buffer.append("aload_0\n");
+				metodoClasseAtual = true;
 				simboloClasse = classeAtual;
 				nomeMetodo = $a.getText();
 			}
@@ -664,6 +1181,7 @@ chamadaMetodo
 	            			loadConst(p.getText());
 	            		} else {
 	            			percorrerSubArvore((TradutorAST)expr);
+	            			((TradutorAST)expr).visited = true;
 	                		tiposParams.add(Tradutor.tipoAtual.getNome());
 	            		}
 			}
@@ -704,9 +1222,12 @@ chamadaMetodo
 			
 			String call = "";
 			
+			if (metodoClasseAtual && !simboloMetodo.isEstatico())
+				Tradutor.buffer.append("aload_0\n");
+			
 			if (simboloMetodo.isEstatico())
 				call += "invokestatic ";
-			else if (simboloMetodo.getNome().equals(simboloClasse))
+			else if (simboloMetodo.getNome().equals(simboloClasse.getNome()))
 				call += "invokespecial ";
 			else
 				call += "invokevirtual ";
@@ -714,7 +1235,7 @@ chamadaMetodo
 			
 			call += simboloClasse.getNome()+"/";
 			
-			if (simboloMetodo.getNome().equals(simboloClasse))
+			if (simboloMetodo.getNome().equals(simboloClasse.getNome()))
 				call += "<init>";
 			else
 				call += nomeMetodo;
@@ -739,11 +1260,13 @@ chamadaMetodo
 			else if (simboloMetodo.getTipo().getNome().equals("int"))
 				call += "I";
 			else if (simboloMetodo.getTipo().getNome().equals("int[]"))
-				call += "[I;";
+							call += "[I;";
 			else
 				call += "L"+simboloMetodo.getTipo().getNome()+";";
 				
 			Tradutor.buffer.append(call+"\n");
+			
+			$a.visited = true;
 			
 		
 		}
@@ -755,18 +1278,20 @@ chamadaMetodoSemParams
 	:	^(METHOD_CALL a = .)
 	{
 		
-		if (!($METHOD_CALL.hasAncestor(VECT_EXPR) || $METHOD_CALL.hasAncestor(METHOD_CALL))){
+		if (!($METHOD_CALL.hasAncestor(VECT_EXPR) || $METHOD_CALL.hasAncestor(METHOD_CALL)) && !$a.visited){
 		
 			SimboloVariavel simboloVariavel;
 			SimboloMetodo simboloMetodo;
 			SimboloClasse simboloClasse = null;
 			String nomeMetodo;
 			boolean chamadaEstatica = false;
+			boolean metodoClasseAtual = false;
 			
 			if ($a.getText().equals(".")){
 				nomeMetodo = ((Tree)$a.getChildren().get(1)).getText();
 				if (((Tree)$a.getChildren().get(0)).getText().equals(".")){
 					percorrerSubArvore((TradutorAST)$a.getChildren().get(0));
+					((TradutorAST)$a.getChildren().get(0)).visited = true;
 					simboloClasse = (SimboloClasse)Tradutor.tipoAtual;
 				}else {
 					Simbolo s = ((TradutorAST)$a.getChildren().get(0)).escopo.resolver(((Tree)$a.getChildren().get(0)).getText());
@@ -781,11 +1306,10 @@ chamadaMetodoSemParams
 				}
 				
 			} else if ($METHOD_CALL.getParent().getText().equals("new")) {
-				Tradutor.buffer.append("new "+$a.getText()+"\n");
 				simboloClasse = (SimboloClasse)tabelaSimbolos.global.resolver($a.getText());
 				nomeMetodo = $a.getText();
 			} else {
-				Tradutor.buffer.append("aload_0\n");
+				metodoClasseAtual = true;
 				simboloClasse = classeAtual;
 				nomeMetodo = $a.getText();
 			}
@@ -795,7 +1319,7 @@ chamadaMetodoSemParams
 			if (!chamadaEstatica)
 				assinaturaMetodo += simboloClasse.getNome();
 			
-			assinaturaMetodo += ")";
+						assinaturaMetodo += ")";
 			
 			System.out.println(assinaturaMetodo);
 			
@@ -808,11 +1332,14 @@ chamadaMetodoSemParams
 					chamadaEstatica = true;			
 			}
 			
+			if (metodoClasseAtual && !simboloMetodo.isEstatico())
+				Tradutor.buffer.append("aload_0\n");
+			
 			String call = "";
 			
 			if (simboloMetodo.isEstatico())
 				call += "invokestatic ";
-			else if (simboloMetodo.getNome().equals(simboloClasse))
+			else if (simboloMetodo.getNome().equals(simboloClasse.getNome()))
 				call += "invokespecial ";
 			else
 				call += "invokevirtual ";
@@ -820,7 +1347,7 @@ chamadaMetodoSemParams
 			
 			call += simboloClasse.getNome()+"/";
 			
-			if (simboloMetodo.getNome().equals(simboloClasse))
+			if (simboloMetodo.getNome().equals(simboloClasse.getNome()))
 				call += "<init>";
 			else
 				call += nomeMetodo;
@@ -838,6 +1365,7 @@ chamadaMetodoSemParams
 				
 			Tradutor.buffer.append(call+"\n");
 			
+			$a.visited = true;
 		
 		}
 	

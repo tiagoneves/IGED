@@ -3,5 +3,13 @@ class C {
 	int a;
 	
 	int b;
+	
+	int[] k;
+	
+	D t;
+	
+	C(){
+	
+	}
 
 }

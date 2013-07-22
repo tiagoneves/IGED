@@ -1,0 +1,11 @@
+class D{
+
+	int a;
+	
+	int b;
+	
+	D(){
+	
+	}
+
+}

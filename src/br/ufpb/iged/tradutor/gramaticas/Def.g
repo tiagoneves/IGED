@@ -120,7 +120,8 @@ enterMethod
 	                metodoAtual.definir(simboloVariavel);
 	                
 	        	metodoAtual.incrementarQuantidadeVariaveis(); 
-	        }   
+	        } else 
+	        	metodoAtual.setEstatico(true);  
 	           
         }
     ;
@@ -185,7 +186,7 @@ fieldDecl
 	        	simboloVariavel = new SimboloVariavel($ID.text,new SimboloTipoPrimitivo("int"));
 	        else {
 	        	String tipo = $tp.getText();
-	        	if ($vet != null)
+	        	if ($vet != null && $vet.getText().equals("[]"))
 	        		tipo += "[]";
 	        	simboloVariavel = new SimboloVariavel($ID.text,new SimboloTipoReferencia(tipo));
 	        }
@@ -206,7 +207,7 @@ paramDecl
 	        	simboloVariavel = new SimboloVariavel($ID.text,new SimboloTipoPrimitivo("int"), metodoAtual.getQuantidadeVariaveis());
 		else {
 	        	String tipo = $tp.getText();
-	        	if ($vet != null)
+	        	if ($vet != null && $vet.getText().equals("[]"))
 	        		tipo += "[]";
 	        	simboloVariavel = new SimboloVariavel($ID.text,new SimboloTipoReferencia(tipo), metodoAtual.getQuantidadeVariaveis());
 	        } 	
@@ -230,7 +231,7 @@ listaVarDecl
 	        	simboloVariavel = new SimboloVariavel($ID.text, new SimboloTipoPrimitivo("int"), metodoAtual.getQuantidadeVariaveis());
 	        else {
 	        	String tipo = $tp.getText();
-	        	if ($vet != null)
+	        	if ($vet != null && $vet.getText().equals("[]"))
 	        		tipo += "[]";
 	        	simboloVariavel = new SimboloVariavel($ID.text, new SimboloTipoReferencia(tipo), metodoAtual.getQuantidadeVariaveis());
 	        } 	
@@ -259,7 +260,7 @@ varDeclFor
 	        	simboloVariavel = new SimboloVariavel($ID.text, new SimboloTipoPrimitivo("int"), metodoAtual.getQuantidadeVariaveis());
 		else {
 	        	String tipo = $tp.getText();
-	        	if ($vet != null)
+	        	if ($vet != null && $vet.getText().equals("[]"))
 	        		tipo += "[]";
 	        	simboloVariavel = new SimboloVariavel($ID.text, new SimboloTipoReferencia(tipo), metodoAtual.getQuantidadeVariaveis());
 	        } 	

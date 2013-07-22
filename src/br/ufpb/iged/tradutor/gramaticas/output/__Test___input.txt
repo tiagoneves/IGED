@@ -63,6 +63,26 @@ class A {
   	
   	c.nakasja(j, 8);
   	
+  	c.x = 8 - 3 * 9;
+  	
+  	vet[4] = 5 - 2;
+  	
+  	int[] vect = new int[10]; 
+  	
+  	vect = new int[2 - 7];
+  	
+  	c.v = new int[4];
+  	
+  	c.w.k = new int[8];
+  	
+  	B n = new B();
+  	
+  	n = new B(3 + 7);
+  	
+  	n.w = new C();
+  	
+  	n.w.t = new D();
+  	
   }
 
 }

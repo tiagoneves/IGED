@@ -1,4 +1,4 @@
-// $ANTLR 3.4 C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Jedi.g 2013-07-16 17:34:37
+// $ANTLR 3.4 C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Jedi.g 2013-07-22 00:28:04
 
   package br.ufpb.iged.tradutor.parser;
   //package br.ufpb.iged.tradutor.gramaticas.output;
@@ -328,7 +328,7 @@ public TreeAdaptor getTreeAdaptor() {
 
 
             // AST REWRITE
-            // elements: ID, membroClasse, superClasse
+            // elements: ID, superClasse, membroClasse
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -908,7 +908,7 @@ public TreeAdaptor getTreeAdaptor() {
 
 
             // AST REWRITE
-            // elements: ID, tipo, a, vet
+            // elements: a, vet, ID, tipo
             // token labels: a, vet
             // rule labels: retval
             // token list labels: 
@@ -1130,7 +1130,7 @@ public TreeAdaptor getTreeAdaptor() {
             if ( state.backtracking==0 ) stream_bloco.add(bloco21.getTree());
 
             // AST REWRITE
-            // elements: ID, tipo, bloco, a, vet, params
+            // elements: vet, ID, a, tipo, params, bloco
             // token labels: a, vet
             // rule labels: retval
             // token list labels: 
@@ -1303,7 +1303,7 @@ public TreeAdaptor getTreeAdaptor() {
             if ( state.backtracking==0 ) stream_bloco.add(bloco26.getTree());
 
             // AST REWRITE
-            // elements: ID, params, bloco
+            // elements: params, bloco, ID
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -1570,7 +1570,7 @@ public TreeAdaptor getTreeAdaptor() {
 
 
             // AST REWRITE
-            // elements: ID, vet, tipo
+            // elements: vet, tipo, ID
             // token labels: vet
             // rule labels: retval
             // token list labels: 
@@ -3443,7 +3443,7 @@ public TreeAdaptor getTreeAdaptor() {
 
 
             	    // AST REWRITE
-            	    // elements: ID, posfixa, 48, listaExpressoes
+            	    // elements: listaExpressoes, ID, posfixa, 48
             	    // token labels: 
             	    // rule labels: retval
             	    // token list labels: 
@@ -3505,7 +3505,7 @@ public TreeAdaptor getTreeAdaptor() {
 
 
             	    // AST REWRITE
-            	    // elements: posfixa, ID, 48
+            	    // elements: ID, posfixa, 48
             	    // token labels: 
             	    // rule labels: retval
             	    // token list labels: 
@@ -3562,7 +3562,7 @@ public TreeAdaptor getTreeAdaptor() {
 
 
             	    // AST REWRITE
-            	    // elements: posfixa, listaExpressoes
+            	    // elements: listaExpressoes, posfixa
             	    // token labels: 
             	    // rule labels: retval
             	    // token list labels: 
@@ -3671,7 +3671,7 @@ public TreeAdaptor getTreeAdaptor() {
 
 
             	    // AST REWRITE
-            	    // elements: expressao, posfixa, 48, ID
+            	    // elements: 48, ID, posfixa, expressao
             	    // token labels: 
             	    // rule labels: retval
             	    // token list labels: 
@@ -4715,7 +4715,7 @@ public TreeAdaptor getTreeAdaptor() {
 
 
             	    // AST REWRITE
-            	    // elements: 48, chamadaMetodo, listaExpressoes, ID
+            	    // elements: chamadaMetodo, ID, 48, listaExpressoes
             	    // token labels: 
             	    // rule labels: retval
             	    // token list labels: 
@@ -4954,7 +4954,7 @@ public TreeAdaptor getTreeAdaptor() {
 
 
             // AST REWRITE
-            // elements: vet, tipo, expressao, ID
+            // elements: expressao, tipo, ID, vet
             // token labels: vet
             // rule labels: retval
             // token list labels: 
@@ -5096,7 +5096,7 @@ public TreeAdaptor getTreeAdaptor() {
 
 
             // AST REWRITE
-            // elements: varDecl, varDeclLista
+            // elements: varDeclLista, varDecl
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -5254,7 +5254,7 @@ public TreeAdaptor getTreeAdaptor() {
 
 
             // AST REWRITE
-            // elements: expressao, ID, vet
+            // elements: ID, vet, expressao
             // token labels: vet
             // rule labels: retval
             // token list labels: 
@@ -5487,7 +5487,7 @@ public TreeAdaptor getTreeAdaptor() {
 
 
             // AST REWRITE
-            // elements: elseIf, expressao, instrucao
+            // elements: instrucao, expressao, elseIf
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -5598,7 +5598,7 @@ public TreeAdaptor getTreeAdaptor() {
 
 
             // AST REWRITE
-            // elements: 63, instrucao
+            // elements: instrucao, 63
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -5979,7 +5979,7 @@ public TreeAdaptor getTreeAdaptor() {
 
 
             // AST REWRITE
-            // elements: instrucao, expressao
+            // elements: expressao, instrucao
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -6185,7 +6185,7 @@ public TreeAdaptor getTreeAdaptor() {
             if ( state.backtracking==0 ) stream_instrucao.add(instrucao179.getTree());
 
             // AST REWRITE
-            // elements: condicaoFor, instrucao, incrementoFor, inicializacaoFor
+            // elements: incrementoFor, instrucao, condicaoFor, inicializacaoFor
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -6405,7 +6405,7 @@ public TreeAdaptor getTreeAdaptor() {
 
 
                     // AST REWRITE
-                    // elements: atribuicao, varDecl
+                    // elements: varDecl, atribuicao
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 

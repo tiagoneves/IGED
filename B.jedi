@@ -8,6 +8,14 @@ class B{
 	
 	static int s;
 	
+	B(){
+	
+	}
+	
+	B(int i){
+	
+	}
+	
 	void doSomething(){
 	
 		int a = 2 + 3;
@@ -17,6 +25,11 @@ class B{
 	void nakasja(int i, int j){
 	
 		int k = 3;
+	
+	}
+	
+	static void koasdw(int a){
+	
 	
 	}
 	

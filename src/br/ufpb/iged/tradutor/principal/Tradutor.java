@@ -51,6 +51,7 @@ public class Tradutor {
 			SimboloClasse sc = (SimboloClasse)tabelaSimbolos.global.resolver("B");
 			SimboloMetodo sm = (SimboloMetodo)sc.resolverMetodo("nakasja(B,int,int)");
 			System.out.println(sm.obterAssinatura());
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

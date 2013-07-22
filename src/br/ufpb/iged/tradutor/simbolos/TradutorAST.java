@@ -8,9 +8,11 @@ import br.ufpb.iged.tradutor.simbolos.Simbolo;
 
 public class TradutorAST extends CommonTree{
 
-public Escopo escopo;   
+    public Escopo escopo;   
     
     public Simbolo simbolo; 
+    
+    public boolean visited = false;
     
     public TradutorAST(Token t) { 
     	super(t); 

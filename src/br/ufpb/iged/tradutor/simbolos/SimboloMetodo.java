@@ -22,9 +22,9 @@ public class SimboloMetodo extends SimboloComEscopo {
     	return argsOrdenados; 
     }
 
-    public String getNome() {
+    /*public String getNome() {
         return nome+"("+stripBrackets(argsOrdenados.keySet().toString())+")";
-    }
+    }*/
 
 	public boolean isEstatico() {
 		return estatico;
@@ -56,18 +56,22 @@ public class SimboloMetodo extends SimboloComEscopo {
 		
 		args.addAll(argsOrdenados.keySet());
 		
-		String fArg = args.remove(0);
+		if (!args.isEmpty()){
 		
-		SimboloVariavel var = (SimboloVariavel)argsOrdenados.get(fArg);
+			String fArg = args.remove(0);
+			
+			SimboloVariavel var = (SimboloVariavel)argsOrdenados.get(fArg);
+			
+			assinatura += var.getTipo().getNome();
+			
+			for (String arg : args){
+				
+				var = (SimboloVariavel)argsOrdenados.get(arg);
+				
+				assinatura += ","+var.getTipo().getNome();
+				
+			}
 		
-		assinatura += var.getTipo().getNome();
-		
-		for (String arg : args){
-			
-			var = (SimboloVariavel)argsOrdenados.get(arg);
-			
-			assinatura += ","+var.getTipo().getNome();
-			
 		}
 		
 		return assinatura+")";
