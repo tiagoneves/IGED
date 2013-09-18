@@ -42,6 +42,23 @@ class A {
   	int z = x + y * k;
   	
   	k = x + z - 10;
+
+	if (x > z){
+
+	   k = k - z;
+            
+            z = 3;
+
+	} 
+
+	if (k == z){
+	   x = k +2;
+	   z = 3;
+            x = y + 5;
+	} else {
+	   y = 6 + z;
+            x = y + z;
+	}
   
   }
   
@@ -82,6 +99,10 @@ class A {
   	n.w = new C();
   	
   	n.w.t = new D();
+  	
+  	B.koasdw(5);
+  	
+  	aritmeticas();
   	
   }
 

@@ -42,6 +42,60 @@ class A {
   	int z = x + y * k;
   	
   	k = x + z - 10;
+  	
+  	if (x > z){
+
+	   k = k - z;
+            
+       z = 3;
+
+	}
+	
+	if (x == y)
+		x = 8;
+		
+	if (y < k){
+	
+		k = 5;
+		
+		z = 12;
+		
+		x = k + z;
+	
+	} else {
+	
+		z = 1;
+		
+		x = y;
+	
+	}
+	
+	if (z > x){
+	
+		z = 3 + y;
+		
+		x = z / 6;
+	
+	} else
+		
+		y = 24;
+		
+	if (z >= k)
+	
+		k = 2;
+		
+	else {
+	
+		z = 5 + y;
+		
+		y = x * y;
+	}
+	
+	if (x <= z)
+		x = z / y;
+	else
+		k = 3;
+		
   
   }
   

@@ -124,6 +124,19 @@ options {
         ref.downup(tree);
      
      }
+     
+     private void visitarSubArvore(TradutorAST t) {
+        	 
+        	t.visited = true;
+        	 
+        	if (t.getChildCount() > 0){
+        		 
+        		for (Object c : t.getChildren())
+        			visitarSubArvore((TradutorAST)c);
+        		 
+        	 }
+        	 
+         }
     
 }
 
@@ -138,6 +151,12 @@ topdown
     |   enterAttrVetor
     //|   enterNewObject
     |   enterNewObjectListaVarDeclAtribuicao
+    |   enterIfComBloco
+    |   enterIfSemBloco
+    //|   enterIfComBlocoElseComBloco
+/*    |   enterIfSemBlocoElseComBloco
+    |   enterIfComBlocoElseSemBloco
+    |   enterIfSemBlocoElseSemBloco*/
     ;
 
 bottomup
@@ -1371,3 +1390,217 @@ chamadaMetodoSemParams
 	
 		}
 	;
+
+enterIfComBloco
+	:	^(IF ^(EXPR a = .) ^(BLOCO .*) b = .? .?)
+	{
+	
+		percorrerSubArvore($a);
+		
+		visitarSubArvore($a);
+		
+		Tradutor.buffer.append(" L"+(++Tradutor.label)+"\n");
+		
+		Tradutor.buffer.append("goto L"+(Tradutor.label + 1)+"\n");
+		
+		Tradutor.buffer.append("L"+Tradutor.label+": ");
+		
+		percorrerSubArvore($BLOCO);
+		
+		visitarSubArvore($BLOCO);
+		
+		if (b != null)
+			Tradutor.buffer.append("goto L"+(Tradutor.label + 2)+"\n");
+		
+		Tradutor.buffer.append("L"+(++Tradutor.label)+": ");
+		
+		if (b != null) {
+		
+			TradutorAST els = (TradutorAST)b.getChild(0);
+			
+			percorrerSubArvore(els);
+		
+			visitarSubArvore(els);
+			
+			Tradutor.buffer.append("L"+(++Tradutor.label)+": ");
+		
+		}
+			
+	
+	}
+	;
+	
+enterIfSemBloco
+	:	^(IF ^(EXPR a = .) ^(EXPR b = .) . c = .? .?)
+	{
+		percorrerSubArvore($a);
+		
+		visitarSubArvore($a);
+		
+		Tradutor.buffer.append(" L"+(++Tradutor.label)+"\n");
+		
+		Tradutor.buffer.append("goto L"+(Tradutor.label + 1)+"\n");
+		
+		Tradutor.buffer.append("L"+Tradutor.label+": ");
+		
+		percorrerSubArvore($b);
+		
+		visitarSubArvore($b);
+		
+		if (c != null)
+			Tradutor.buffer.append("goto L"+(Tradutor.label + 2)+"\n");
+		
+		Tradutor.buffer.append("L"+(++Tradutor.label)+": ");
+		
+		if (c != null) {
+		
+			TradutorAST els = (TradutorAST)c.getChild(0);
+			
+			percorrerSubArvore(els);
+		
+			visitarSubArvore(els);
+			
+			Tradutor.buffer.append("L"+(++Tradutor.label)+": ");
+		
+		}
+	}
+	;
+	
+/*enterIfSemBloco
+	:	^(IF ^(EXPR a = .) ^(EXPR b = .) .)
+	{
+		percorrerSubArvore($a);
+		
+		visitarSubArvore($a);
+		
+		Tradutor.buffer.append(" L"+(++Tradutor.label)+"\n");
+		
+		Tradutor.buffer.append("goto L"+(Tradutor.label + 1)+"\n");
+		
+		Tradutor.buffer.append("L"+Tradutor.label+": ");
+		
+		percorrerSubArvore($b);
+		
+		visitarSubArvore($b);
+		
+		Tradutor.buffer.append("L"+(++Tradutor.label)+": ");
+	}
+	;
+	
+/*enterIfComBlocoElseComBloco
+	:	^(IF ^(EXPR a = .) ^(b = BLOCO .*) ^('else' ^(c = BLOCO .*)))
+	{
+		percorrerSubArvore($a);
+		
+		visitarSubArvore($a);
+		
+		Tradutor.buffer.append(" L"+(++Tradutor.label)+"\n");
+		
+		Tradutor.buffer.append("goto L"+(Tradutor.label + 1)+"\n");
+		
+		Tradutor.buffer.append("L"+Tradutor.label+": ");
+		
+		percorrerSubArvore($b);
+		
+		visitarSubArvore($b);
+		
+		Tradutor.buffer.append("goto L"+(Tradutor.label + 2)+"\n");
+		
+		Tradutor.buffer.append("L"+(++Tradutor.label)+": ");
+		
+		percorrerSubArvore($c);
+		
+		visitarSubArvore($c);
+		
+		Tradutor.buffer.append("L"+(++Tradutor.label)+": ");
+	}
+	;*/
+	
+/*enterIfSemBlocoElseComBloco
+	:	^(IF ^(EXPR a = .) ^(EXPR b = .) . ^('else' ^(BLOCO .*)))
+	{
+		percorrerSubArvore($a);
+		
+		visitarSubArvore($a);
+		
+		Tradutor.buffer.append(" L"+(++Tradutor.label)+"\n");
+		
+		Tradutor.buffer.append("goto L"+(Tradutor.label + 1)+"\n");
+		
+		Tradutor.buffer.append("L"+Tradutor.label+": ");
+		
+		percorrerSubArvore($b);
+		
+		visitarSubArvore($b);
+		
+		Tradutor.buffer.append("goto L"+(Tradutor.label + 2)+"\n");
+		
+		Tradutor.buffer.append("L"+(++Tradutor.label)+": ");
+		
+		percorrerSubArvore($BLOCO);
+		
+		visitarSubArvore($BLOCO);
+		
+		Tradutor.buffer.append("L"+(++Tradutor.label)+": ");
+		
+		
+	}
+	;
+	
+enterIfComBlocoElseSemBloco
+	:	^(IF ^(EXPR a = .) ^(BLOCO .*) ^('else' ^(EXPR b = .) .))
+	{	
+		percorrerSubArvore($a);
+		
+		visitarSubArvore($a);
+		
+		Tradutor.buffer.append(" L"+(++Tradutor.label)+"\n");
+		
+		Tradutor.buffer.append("goto L"+(Tradutor.label + 1)+"\n");
+		
+		Tradutor.buffer.append("L"+Tradutor.label+": ");
+		
+		percorrerSubArvore($BLOCO);
+		
+		visitarSubArvore($BLOCO);
+		
+		Tradutor.buffer.append("goto L"+(Tradutor.label + 2)+"\n");
+		
+		Tradutor.buffer.append("L"+(++Tradutor.label)+": ");
+		
+		percorrerSubArvore($b);
+		
+		visitarSubArvore($b);
+		
+		Tradutor.buffer.append("L"+(++Tradutor.label)+": ");
+	}
+	;
+	
+enterIfSemBlocoElseSemBloco
+	:	^(IF ^(EXPR a = .) ^(EXPR b = .) . ^(EXPR c = .) .)
+	{	
+		percorrerSubArvore($a);
+		
+		visitarSubArvore($a);
+		
+		Tradutor.buffer.append(" L"+(++Tradutor.label)+"\n");
+		
+		Tradutor.buffer.append("goto L"+(Tradutor.label + 1)+"\n");
+		
+		Tradutor.buffer.append("L"+Tradutor.label+": ");
+		
+		percorrerSubArvore($b);
+		
+		visitarSubArvore($b);
+		
+		Tradutor.buffer.append("goto L"+(Tradutor.label + 2)+"\n");
+		
+		Tradutor.buffer.append("L"+(++Tradutor.label)+": ");
+		
+		percorrerSubArvore($c);
+		
+		visitarSubArvore($c);
+		
+		Tradutor.buffer.append("L"+(++Tradutor.label)+": ");
+	}
+	;*/

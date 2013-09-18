@@ -41,6 +41,7 @@ public class Tradutor {
 	public static StringBuffer buffer;
 	public static String tipoReferencia;
 	public static Tipo tipoAtual;
+	public static int label = 0;
 	
 	public static TabelaSimbolos tabelaSimbolos;
 	

@@ -1,6 +1,5 @@
 class Lista {
-	
-	
+		
 	static void preencherLista(List a, int b) {
 		
 		NodeList c = new NodeList(10);
@@ -35,8 +34,7 @@ class Lista {
 			c = a.init;
 			
 		}
-				
-		
+					
 	}
 	
 	static void removerNo(List a, int b){
@@ -60,11 +58,9 @@ class Lista {
 		
 		NodeList e = c.next;
 		c.next = c.next.next;
-		e.next = null;
-		
+		e.next = null;		
 		
 	}
-	
-	
-	
+		
 }
+

@@ -1,4 +1,4 @@
-// $ANTLR 3.4 C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Jedi.g 2013-07-21 18:48:23
+// $ANTLR 3.4 C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Jedi.g 2013-09-13 12:37:24
 
   //package br.ufpb.iged.tradutor.parser;
   package br.ufpb.iged.tradutor.gramaticas.output;
@@ -107,15 +107,15 @@ public class JediParser extends DebugParser {
 
 
 public static final String[] ruleNames = new String[] {
-    "invalidRule", "forStatement", "synpred6_Jedi", "or", "novo", "add", 
-    "elseIf", "posfixa", "membroClasse", "params", "superClasse", "condicaoFor", 
-    "instrucao", "relacional", "synpred7_Jedi", "bloco", "listaExpressoes", 
-    "param", "programa", "synpred1_Jedi", "synpred8_Jedi", "classe", "synpred4_Jedi", 
-    "atribuicao", "synpred2_Jedi", "returnStatement", "fieldDecl", "incrementoFor", 
-    "incremento", "constrDecl", "synpred3_Jedi", "and", "synpred5_Jedi", 
-    "expressao", "ifStatement", "listaVarDecl", "chamadaMetodo", "xor", 
-    "igualdade", "whileStatement", "tipo", "mult", "inicializacaoFor", "primaria", 
-    "varDecl", "doWhileStatement", "varDeclLista", "methodDecl"
+    "invalidRule", "igualdade", "incremento", "expressao", "synpred2_Jedi", 
+    "elseIf", "varDeclLista", "atribuicao", "param", "synpred3_Jedi", "incrementoFor", 
+    "condicaoFor", "programa", "classe", "methodDecl", "relacional", "synpred4_Jedi", 
+    "add", "synpred5_Jedi", "ifStatement", "or", "synpred6_Jedi", "listaExpressoes", 
+    "synpred8_Jedi", "synpred1_Jedi", "bloco", "tipo", "xor", "mult", "constrDecl", 
+    "whileStatement", "synpred7_Jedi", "doWhileStatement", "returnStatement", 
+    "chamadaMetodo", "membroClasse", "superClasse", "and", "novo", "posfixa", 
+    "listaVarDecl", "params", "primaria", "inicializacaoFor", "instrucao", 
+    "forStatement", "fieldDecl", "varDecl"
 };
 
 public static final boolean[] decisionCanBacktrack = new boolean[] {
@@ -443,7 +443,7 @@ public TreeAdaptor getTreeAdaptor() {
 
 
             // AST REWRITE
-            // elements: superClasse, membroClasse, ID
+            // elements: membroClasse, superClasse, ID
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -1124,7 +1124,7 @@ public TreeAdaptor getTreeAdaptor() {
 
 
             // AST REWRITE
-            // elements: tipo, a, ID, vet
+            // elements: a, vet, tipo, ID
             // token labels: a, vet
             // rule labels: retval
             // token list labels: 
@@ -1396,7 +1396,7 @@ public TreeAdaptor getTreeAdaptor() {
             if ( state.backtracking==0 ) stream_bloco.add(bloco21.getTree());
 
             // AST REWRITE
-            // elements: bloco, ID, tipo, vet, params, a
+            // elements: vet, ID, params, a, bloco, tipo
             // token labels: a, vet
             // rule labels: retval
             // token list labels: 
@@ -1602,7 +1602,7 @@ public TreeAdaptor getTreeAdaptor() {
             if ( state.backtracking==0 ) stream_bloco.add(bloco26.getTree());
 
             // AST REWRITE
-            // elements: ID, bloco, params
+            // elements: bloco, params, ID
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -1930,7 +1930,7 @@ public TreeAdaptor getTreeAdaptor() {
 
 
             // AST REWRITE
-            // elements: ID, vet, tipo
+            // elements: tipo, vet, ID
             // token labels: vet
             // rule labels: retval
             // token list labels: 
@@ -4225,7 +4225,7 @@ public TreeAdaptor getTreeAdaptor() {
 
 
             	    // AST REWRITE
-            	    // elements: ID, posfixa, listaExpressoes, 48
+            	    // elements: ID, 48, posfixa, listaExpressoes
             	    // token labels: 
             	    // rule labels: retval
             	    // token list labels: 
@@ -4295,7 +4295,7 @@ public TreeAdaptor getTreeAdaptor() {
 
 
             	    // AST REWRITE
-            	    // elements: posfixa, 48, ID
+            	    // elements: 48, posfixa, ID
             	    // token labels: 
             	    // rule labels: retval
             	    // token list labels: 
@@ -4358,7 +4358,7 @@ public TreeAdaptor getTreeAdaptor() {
 
 
             	    // AST REWRITE
-            	    // elements: listaExpressoes, posfixa
+            	    // elements: posfixa, listaExpressoes
             	    // token labels: 
             	    // rule labels: retval
             	    // token list labels: 
@@ -4479,7 +4479,7 @@ public TreeAdaptor getTreeAdaptor() {
 
 
             	    // AST REWRITE
-            	    // elements: 48, posfixa, expressao, ID
+            	    // elements: expressao, 48, ID, posfixa
             	    // token labels: 
             	    // rule labels: retval
             	    // token list labels: 
@@ -5731,7 +5731,7 @@ public TreeAdaptor getTreeAdaptor() {
 
 
             	    // AST REWRITE
-            	    // elements: ID, chamadaMetodo, listaExpressoes, 48
+            	    // elements: chamadaMetodo, ID, 48, listaExpressoes
             	    // token labels: 
             	    // rule labels: retval
             	    // token list labels: 
@@ -6019,7 +6019,7 @@ public TreeAdaptor getTreeAdaptor() {
 
 
             // AST REWRITE
-            // elements: expressao, tipo, vet, ID
+            // elements: tipo, vet, ID, expressao
             // token labels: vet
             // rule labels: retval
             // token list labels: 
@@ -6672,7 +6672,7 @@ public TreeAdaptor getTreeAdaptor() {
 
 
             // AST REWRITE
-            // elements: elseIf, expressao, instrucao
+            // elements: instrucao, elseIf, expressao
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -7512,7 +7512,7 @@ public TreeAdaptor getTreeAdaptor() {
             if ( state.backtracking==0 ) stream_instrucao.add(instrucao179.getTree());
 
             // AST REWRITE
-            // elements: instrucao, condicaoFor, incrementoFor, inicializacaoFor
+            // elements: inicializacaoFor, condicaoFor, incrementoFor, instrucao
             // token labels: 
             // rule labels: retval
             // token list labels: 
