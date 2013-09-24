@@ -1,4 +1,4 @@
-// $ANTLR 3.4 C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Jedi.g 2013-09-18 12:12:30
+// $ANTLR 3.4 C:\\Users\\Tiago\\Git\\IGED\\src\\br\\ufpb\\iged\\tradutor\\gramaticas\\Jedi.g 2013-09-24 12:33:58
 
   package br.ufpb.iged.tradutor.parser;
   //package br.ufpb.iged.tradutor.gramaticas.output;
@@ -328,7 +328,7 @@ public TreeAdaptor getTreeAdaptor() {
 
 
             // AST REWRITE
-            // elements: ID, membroClasse, superClasse
+            // elements: membroClasse, ID, superClasse
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -908,7 +908,7 @@ public TreeAdaptor getTreeAdaptor() {
 
 
             // AST REWRITE
-            // elements: ID, tipo, a, vet
+            // elements: vet, tipo, a, ID
             // token labels: a, vet
             // rule labels: retval
             // token list labels: 
@@ -1130,7 +1130,7 @@ public TreeAdaptor getTreeAdaptor() {
             if ( state.backtracking==0 ) stream_bloco.add(bloco21.getTree());
 
             // AST REWRITE
-            // elements: ID, tipo, bloco, a, vet, params
+            // elements: tipo, a, bloco, params, ID, vet
             // token labels: a, vet
             // rule labels: retval
             // token list labels: 
@@ -1303,7 +1303,7 @@ public TreeAdaptor getTreeAdaptor() {
             if ( state.backtracking==0 ) stream_bloco.add(bloco26.getTree());
 
             // AST REWRITE
-            // elements: ID, params, bloco
+            // elements: ID, bloco, params
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -1570,7 +1570,7 @@ public TreeAdaptor getTreeAdaptor() {
 
 
             // AST REWRITE
-            // elements: ID, vet, tipo
+            // elements: vet, tipo, ID
             // token labels: vet
             // rule labels: retval
             // token list labels: 
@@ -3443,7 +3443,7 @@ public TreeAdaptor getTreeAdaptor() {
 
 
             	    // AST REWRITE
-            	    // elements: ID, posfixa, 48, listaExpressoes
+            	    // elements: posfixa, 48, ID, listaExpressoes
             	    // token labels: 
             	    // rule labels: retval
             	    // token list labels: 
@@ -3505,7 +3505,7 @@ public TreeAdaptor getTreeAdaptor() {
 
 
             	    // AST REWRITE
-            	    // elements: posfixa, ID, 48
+            	    // elements: 48, posfixa, ID
             	    // token labels: 
             	    // rule labels: retval
             	    // token list labels: 
@@ -3671,7 +3671,7 @@ public TreeAdaptor getTreeAdaptor() {
 
 
             	    // AST REWRITE
-            	    // elements: expressao, posfixa, 48, ID
+            	    // elements: ID, 48, posfixa, expressao
             	    // token labels: 
             	    // rule labels: retval
             	    // token list labels: 
@@ -3740,7 +3740,7 @@ public TreeAdaptor getTreeAdaptor() {
 
 
             	    // AST REWRITE
-            	    // elements: expressao, posfixa
+            	    // elements: posfixa, expressao
             	    // token labels: 
             	    // rule labels: retval
             	    // token list labels: 
@@ -4715,7 +4715,7 @@ public TreeAdaptor getTreeAdaptor() {
 
 
             	    // AST REWRITE
-            	    // elements: 48, chamadaMetodo, listaExpressoes, ID
+            	    // elements: 48, listaExpressoes, ID, chamadaMetodo
             	    // token labels: 
             	    // rule labels: retval
             	    // token list labels: 
@@ -4784,7 +4784,7 @@ public TreeAdaptor getTreeAdaptor() {
 
 
             	    // AST REWRITE
-            	    // elements: listaExpressoes, chamadaMetodo
+            	    // elements: chamadaMetodo, listaExpressoes
             	    // token labels: 
             	    // rule labels: retval
             	    // token list labels: 
@@ -4954,7 +4954,7 @@ public TreeAdaptor getTreeAdaptor() {
 
 
             // AST REWRITE
-            // elements: vet, tipo, expressao, ID
+            // elements: ID, expressao, vet, tipo
             // token labels: vet
             // rule labels: retval
             // token list labels: 
@@ -5254,7 +5254,7 @@ public TreeAdaptor getTreeAdaptor() {
 
 
             // AST REWRITE
-            // elements: expressao, ID, vet
+            // elements: expressao, vet, ID
             // token labels: vet
             // rule labels: retval
             // token list labels: 
@@ -5487,7 +5487,7 @@ public TreeAdaptor getTreeAdaptor() {
 
 
             // AST REWRITE
-            // elements: elseIf, expressao, instrucao
+            // elements: instrucao, elseIf, expressao
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -5598,7 +5598,7 @@ public TreeAdaptor getTreeAdaptor() {
 
 
             // AST REWRITE
-            // elements: 63, instrucao
+            // elements: instrucao, 63
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -5850,7 +5850,7 @@ public TreeAdaptor getTreeAdaptor() {
             if ( state.backtracking==0 ) stream_instrucao.add(instrucao164.getTree());
 
             // AST REWRITE
-            // elements: expressao, instrucao
+            // elements: instrucao, expressao
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -6185,7 +6185,7 @@ public TreeAdaptor getTreeAdaptor() {
             if ( state.backtracking==0 ) stream_instrucao.add(instrucao179.getTree());
 
             // AST REWRITE
-            // elements: condicaoFor, instrucao, incrementoFor, inicializacaoFor
+            // elements: inicializacaoFor, incrementoFor, condicaoFor, instrucao
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -6405,7 +6405,7 @@ public TreeAdaptor getTreeAdaptor() {
 
 
                     // AST REWRITE
-                    // elements: atribuicao, varDecl
+                    // elements: varDecl, atribuicao
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 

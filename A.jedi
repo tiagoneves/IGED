@@ -95,7 +95,33 @@ class A {
 		x = z / y;
 	else
 		k = 3;
+	
+	while (x > y){
+	
+		z = 5 + y;
 		
+		x = z / y;
+		
+		k = 3;
+	
+	}
+	
+	while (z < x)
+		y = x * y;
+		
+	do{
+	
+		z = 3 + y;
+		
+		y = 24;
+		
+		x = z / y;
+		
+	}while(x == y);
+	
+	do
+		y = x * y;
+	while (z > k);
   
   }
   
